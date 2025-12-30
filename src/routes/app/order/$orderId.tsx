@@ -6,6 +6,7 @@ import type { OptionsConfig } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import type { ProductsRecord } from "pocketbase-types";
+import OrderStatus from "./-components/OrderStatus";
 
 export const Route = createFileRoute("/app/order/$orderId")({
   component: RouteComponent,
@@ -38,11 +39,14 @@ function RouteComponent() {
           ] as ProductsRecord<OptionsConfig>;
           return (
             <>
+              <div className="mx-auto max-w-2xl mb-6">
+                <OrderStatus status={data.status} />
+              </div>
               <div className="ring mx-auto max-w-2xl p-4 rounded-box fade">
                 <SimpleCarousel>
                   {data.expand["productId"].images.map((item) => {
                     return (
-                      <div className="h-120 flex">
+                      <div className="h-120 bg-base-300 flex">
                         {/*{JSON.stringify(item.)}*/}
                         <img
                           className="flex-1 object-contain"
