@@ -35,7 +35,9 @@ export default function Checkout() {
         productOptions: item.options,
         userId: user["user"].id as string,
         refId: config.reference,
-        price: compute_total_price(item.price, item.options, item.quantity),
+        price:
+          compute_total_price(item.price, item.options, item.quantity) +
+          deliveryFee,
         quantity: item.quantity,
       } satisfies OrderType;
       return order;

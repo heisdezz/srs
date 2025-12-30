@@ -126,12 +126,14 @@ export type LikesRecord = {
 
 export type OrdersRecord<TproductOptions = unknown> = {
 	created: IsoAutoDateString
+	deliveryFee?: number
 	id: string
 	price?: number
 	productId?: RecordIdString
 	productOptions?: null | TproductOptions
 	quantity?: number
 	refId?: string
+	status?: string
 	updated: IsoAutoDateString
 	userId?: RecordIdString
 }

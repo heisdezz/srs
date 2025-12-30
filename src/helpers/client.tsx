@@ -58,3 +58,10 @@ export const useDeliverySettings = () => {
 export const get_image = (item: Record<string, unknown>, file_name: string) => {
   return pb.files.getURL(item, file_name);
 };
+
+export const convert_to_array = (value: Record<string, unknown>) => {
+  if (!value) return { arr: [], keys: [] };
+  let keys = Object.keys(value);
+  let arr = Object.values(value);
+  return { arr, keys };
+};

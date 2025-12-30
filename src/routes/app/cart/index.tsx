@@ -3,6 +3,7 @@ import { useCartStore } from "@/store/client";
 import { createFileRoute } from "@tanstack/react-router";
 import CartListItem from "./-components/CartItem";
 import Checkout from "./-components/Checkout";
+import EmptyList from "@/components/EmptyList";
 
 export const Route = createFileRoute("/app/cart/")({
   component: RouteComponent,
@@ -15,10 +16,11 @@ function RouteComponent() {
     <section className="container mx-auto px-4 py-12 space-y-4">
       <h2 className="text-3xl font-bold">Cart Items ({cart_length})</h2>
       <div className=" flex gap-4  ">
-        <div className="flex-1 flex flex-col gap-2">
+        <div className="flex-1 flex flex-col gap-2 ">
           {cart_array.map((item) => (
             <CartListItem item={item} />
           ))}
+          <EmptyList list={cart_array} />
           <div className=" lg:hidden">
             <Checkout />
           </div>

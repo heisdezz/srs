@@ -21,6 +21,9 @@ export default function AuthButtonHeader() {
             <li>
               <a>Profile</a>
             </li>
+            <li>
+              <Link to="/app/orders">Orders</Link>
+            </li>
           </ul>
         </div>
       </div>
