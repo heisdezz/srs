@@ -39,6 +39,7 @@ export default function Checkout() {
           compute_total_price(item.price, item.options, item.quantity) +
           deliveryFee,
         quantity: item.quantity,
+        deliveryFee: deliveryFee,
       } satisfies OrderType;
       return order;
     });

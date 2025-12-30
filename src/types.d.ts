@@ -36,4 +36,5 @@ export type OrderType = {
   productOptions: CartItemOption;
   price: number;
   quantity: number;
+  deliveryFee: number;
 };
