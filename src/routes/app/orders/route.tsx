@@ -13,10 +13,6 @@ function RouteComponent() {
         <input id="order-drawer" type="checkbox" className="drawer-toggle" />
         <div className=" drawer-content">
           <Outlet />
-          {/* Page content here */}
-          {/*<label htmlFor="my-drawer-3" className="btn drawer-button lg:hidden">
-            Open drawer
-          </label>*/}
         </div>
         <div className="drawer-side">
           <label

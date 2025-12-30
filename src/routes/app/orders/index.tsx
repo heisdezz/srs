@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useSearch } from "@tanstack/react-router";
 import OrderTracking from "./-components/OrderTracking";
 import PageContainer from "@/components/layouts/PageContainer";
 import { useQuery } from "@tanstack/react-query";
@@ -7,6 +7,7 @@ import PageLoader from "@/components/layouts/PageLoader";
 import { convert_to_array, get_image } from "@/helpers/client";
 import type { OptionsConfig } from "@/types";
 import OrderCard from "./-components/OrderCard";
+import EmptyList from "@/components/EmptyList";
 
 interface OrderSearch {
   status: "pending" | "completed" | "cancelled" | "in transit" | "all";
@@ -26,11 +27,16 @@ export const Route = createFileRoute("/app/orders/")({
 });
 
 function RouteComponent() {
+  const search = useSearch({
+    strict: false,
+  });
+  const status = search["status"];
   const query = useQuery({
-    queryKey: ["orders"],
+    queryKey: ["orders", status],
     queryFn: async () => {
       let resp = await pb.collection("orders").getList(1, 10, {
         expand: "productId",
+        filter: status === "all" ? undefined : `status = '${status}'`,
       });
       return resp;
     },
@@ -45,6 +51,7 @@ function RouteComponent() {
           {(data) => {
             return (
               <>
+                <EmptyList list={data.items} />
                 <ul className="space-y-4 menu w-full">
                   {data.items.map((item) => {
                     return (
