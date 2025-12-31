@@ -26,7 +26,7 @@ export default function AppHero() {
   }, [emblaApi]);
 
   return (
-    <div className="h-155 rounded-box ring fade shadow-xl bg-base-200 w-full relative overflow-hidden">
+    <div className="h-155 rounded-box bg-base-200 w-full relative overflow-hidden isolate">
       <CompLoader query={query} minHeight={620}>
         {(data) => {
           return (
@@ -36,42 +36,66 @@ export default function AppHero() {
                   className="embla__viewport h-full relative isolate"
                   ref={emblaRef}
                 >
-                  <div className="inset-0 z-10 pointer-events-none bg-linear-30 from-base-100 via-base-100/90 to-transparent absolute"></div>
                   <div className="embla__container h-full  flex ">
                     {data.map((banner) => (
                       <div
-                        className="embla__slide  flex-[0_0_100%] 200 min-w-0 relative"
+                        className="embla__slide  flex-[0_0_100%] min-w-0 relative flex p-12 items-center justify-center"
                         key={banner.id}
                       >
-                        {banner.banner_img && (
-                          <img
-                            src={get_image(banner, banner.banner_img)}
-                            alt={banner.title || "Banner Image"}
-                            className="w-full h-full object-cover"
-                          />
-                        )}
-                        <div className="absolute inset-0 z-20 flex items-center justify-start p-16">
-                          <div className="max-w-xl text-left">
-                            {/*<p className="text-lg  mb-2">Men's Shoe</p>*/}
+                        <div className="flex flex-1 items-center justify-center container  p-8 rounded-box shadow fade  ring mx-auto">
+                          <div className="flex-1 text-left pr-16">
                             {banner.title && (
-                              <h2 className="text-6xl font-extrabold mb-4 ">
+                              <h2 className="text-6xl font-bold mb-6 leading-tight">
                                 {banner.title}
                               </h2>
                             )}
                             {banner.description && (
-                              <p className="text-lg mb-6 max-w-md">
+                              <p className="text-lg mb-8 max-w-lg text-current/80">
                                 {banner.description}
                               </p>
                             )}
-                            {banner.product_id && (
+                            <div className="flex items-center space-x-4">
+                              {banner.product_id && (
+                                <Link
+                                  to="/app/product/$id"
+                                  //@ts-ignore
+                                  params={{ id: banner.product_id }}
+                                  className="btn btn-primary"
+                                >
+                                  Shop Now
+                                </Link>
+                              )}
                               <Link
-                                to="/app/product/$id"
-                                //@ts-ignore
-                                params={{ id: banner.product_id }}
-                                className="btn  btn-primary btn-lg ring "
+                                to="/app/products"
+                                className="flex items-center text-gray-800 font-semibold text-lg group"
                               >
-                                See Product
+                                Explore Collection
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={2}
+                                  stroke="currentColor"
+                                  className="w-5 h-5 ml-2 transition-transform transform group-hover:translate-x-1"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                                  />
+                                </svg>
                               </Link>
+                            </div>
+                          </div>
+                          <div className="flex-1 flex justify-end">
+                            {banner.banner_img && (
+                              <div className="rounded-2xl overflow-hidden shadow-2xl">
+                                <img
+                                  src={get_image(banner, banner.banner_img)}
+                                  alt={banner.title || "Banner Image"}
+                                  className="w-[500px] h-[500px] object-cover"
+                                />
+                              </div>
                             )}
                           </div>
                         </div>
