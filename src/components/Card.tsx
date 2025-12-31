@@ -30,7 +30,7 @@ export default function Card(props: { item: ProductsResponse }) {
       <div className="h-52 flex">
         <figure className="flex-1 flex  bg-base-300 rounded-t-box overflow-hidden">
           <img
-            className="flex-1"
+            className="flex-1 object-contain"
             src={imageUrl} // Use the dynamically generated image URL
             alt={item.name || "Product image"} // Use item.name for alt text
           />

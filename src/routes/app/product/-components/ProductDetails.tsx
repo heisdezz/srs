@@ -36,7 +36,7 @@ export default function ProductDetails({
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     let isValid = validateItems(data);
-    if (!isValid) return toast.error("Please Fill All Fields");
+    if (item.options && !isValid) return toast.error("Please Fill All Fields");
 
     const cartItemOptions: CartItemOption = {};
     for (const key in data) {
