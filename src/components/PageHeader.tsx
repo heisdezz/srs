@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import AuthButtonHeader from "./AuthButtonHeader";
+import HeaderLinks from "./HeaderLinks";
 
 export default function PageHeader() {
   return (
@@ -10,12 +11,14 @@ export default function PageHeader() {
           <span className="md:hidden">SRU</span>
           <span className="hidden md:inline">StuffsAreUs</span>
         </Link>
-        <div className="ml-auto space-x-2 hidden md:block">
+
+        <HeaderLinks />
+        <div className="ml-auto md:ml-0 space-x-2 hidden md:block">
           <AuthButtonHeader />
         </div>
         <label
           htmlFor="my-drawer-3"
-          className="btn btn-square btn-ghost ring  fade ml-auto md:hidden drawer-button lg:hidden"
+          className="btn btn-square btn-ghost ring  fade ml-auto md:ml-0 md:hidden drawer-button lg:hidden"
         >
           <Menu />
         </label>

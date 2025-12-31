@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteRouteImport } from './routes/auth/route'
 import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FaqsIndexRouteImport } from './routes/faqs/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
@@ -37,6 +38,11 @@ const AppRouteRoute = AppRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqsIndexRoute = FaqsIndexRouteImport.update({
+  id: '/faqs/',
+  path: '/faqs/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/app/': typeof AppIndexRoute
+  '/faqs': typeof FaqsIndexRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
   '/app/product/$id': typeof AppProductIdRoute
   '/app/cart': typeof AppCartIndexRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/app': typeof AppIndexRoute
+  '/faqs': typeof FaqsIndexRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
   '/app/product/$id': typeof AppProductIdRoute
   '/app/cart': typeof AppCartIndexRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
   '/app/': typeof AppIndexRoute
+  '/faqs/': typeof FaqsIndexRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
   '/app/product/$id': typeof AppProductIdRoute
   '/app/cart/': typeof AppCartIndexRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/signup'
     | '/app/'
+    | '/faqs'
     | '/app/order/$orderId'
     | '/app/product/$id'
     | '/app/cart'
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/signup'
     | '/app'
+    | '/faqs'
     | '/app/order/$orderId'
     | '/app/product/$id'
     | '/app/cart'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/signup'
     | '/app/'
+    | '/faqs/'
     | '/app/order/$orderId'
     | '/app/product/$id'
     | '/app/cart/'
@@ -193,6 +205,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  FaqsIndexRoute: typeof FaqsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -216,6 +229,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faqs/': {
+      id: '/faqs/'
+      path: '/faqs'
+      fullPath: '/faqs'
+      preLoaderRoute: typeof FaqsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -363,6 +383,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  FaqsIndexRoute: FaqsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
