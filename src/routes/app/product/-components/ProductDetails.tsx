@@ -1,5 +1,5 @@
 import { DeliveryInfo } from "@/components/DeliveryInfo";
-import { validateItems } from "@/helpers/client";
+import { get_image, validateItems } from "@/helpers/client";
 import { useCartStore } from "@/store/client";
 import type {
   CartItem,
@@ -53,6 +53,7 @@ export default function ProductDetails({
     const cartItem: CartItem = {
       name: item.name || "Unknown Product",
       id: item.id,
+      img: get_image(item, item.images[0]) as string,
       options: cartItemOptions,
       quantity: quantity,
       price: (basePrice || 0) + additions,

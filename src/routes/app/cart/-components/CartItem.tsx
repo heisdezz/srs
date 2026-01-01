@@ -11,7 +11,11 @@ export default function CartListItem({ item }: { item: CartItem }) {
         className="bg-base-200 ring fade p-4 flex gap-4 rounded-box "
       >
         <figure className="h-22 w-22 lg:aspect-9/12  lg:h-auto lg:min-w-32 ring fade  shrink-0 rounded-box bg-primary/30 overflow-hidden">
-          {/*<img src={get_image(item,item.img)} alt="" className="w-full h-full fade object-cover" />*/}
+          <img
+            src={item.img}
+            alt=""
+            className="w-full h-full fade object-cover"
+          />
         </figure>
         {/*item details*/}
         <div className="flex-grow flex flex-col justify-between">

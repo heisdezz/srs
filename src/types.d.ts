@@ -21,6 +21,7 @@ export type CartItemOption = {
 export interface CartItem {
   id: string;
   name: string;
+  img: string;
   options: CartItemOption;
   quantity: number;
   price: number;
