@@ -43,6 +43,23 @@ export const useUser = () => {
   return { user };
 };
 
+export const validate_user = () => {
+  const isValid = pb.authStore.isValid;
+  if (isValid) {
+    return pb
+      .collection("users")
+      .authRefresh()
+      .catch((err) => {
+        if (err.status === 401) {
+          pb.authStore.clear();
+        } else {
+          throw err;
+        }
+      });
+  }
+  pb.authStore.clear();
+};
+
 export const useDeliverySettings = () => {
   let street = "8, ogunbadejo street";
   let city = "somolu";

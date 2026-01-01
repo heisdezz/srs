@@ -2,7 +2,7 @@ import { pb } from "@/api/apiClient";
 import SimpleInput from "@/components/inputs/SimpleInput";
 import PageHeader from "@/components/PageHeader";
 import { extract_message } from "@/helpers/api";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -77,7 +77,9 @@ function RouteComponent() {
 
             <p className="text-sm text-center">
               Dont have an account?{" "}
-              <span className="text-primary">Sign Up</span>
+              <Link to="/auth/signup" className="text-primary">
+                Sign Up
+              </Link>
             </p>
           </form>
         </FormProvider>

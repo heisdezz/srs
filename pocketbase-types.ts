@@ -13,11 +13,8 @@ export enum Collections {
 	Superusers = "_superusers",
 	Banners = "banners",
 	Categories = "categories",
-	Likes = "likes",
 	Orders = "orders",
 	Products = "products",
-	ProfileSettings = "profileSettings",
-	Reviews = "reviews",
 	Users = "users",
 }
 
@@ -116,14 +113,6 @@ export type CategoriesRecord = {
 	updated: IsoAutoDateString
 }
 
-export type LikesRecord = {
-	created: IsoAutoDateString
-	id: string
-	product?: RecordIdString
-	updated: IsoAutoDateString
-	user?: RecordIdString
-}
-
 export type OrdersRecord<TproductOptions = unknown> = {
 	created: IsoAutoDateString
 	deliveryFee?: number
@@ -145,34 +134,11 @@ export type ProductsRecord<Toptions = unknown> = {
 	discountPrice?: number
 	id: string
 	images?: FileNameString[]
-	likes?: number
 	name?: string
 	options?: null | Toptions
 	price?: number
 	quantity?: number
 	updated: IsoAutoDateString
-}
-
-export type ProfileSettingsRecord = {
-	city?: string
-	country?: string
-	created: IsoAutoDateString
-	id: string
-	state?: string
-	street?: string
-	updated: IsoAutoDateString
-	user?: RecordIdString
-	zipcode?: string
-}
-
-export type ReviewsRecord = {
-	created: IsoAutoDateString
-	id: string
-	product_id?: RecordIdString
-	review?: string
-	star?: number
-	updated: IsoAutoDateString
-	user_id?: RecordIdString
 }
 
 export type UsersRecord = {
@@ -196,11 +162,8 @@ export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemF
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
 export type BannersResponse<Texpand = unknown> = Required<BannersRecord> & BaseSystemFields<Texpand>
 export type CategoriesResponse<Texpand = unknown> = Required<CategoriesRecord> & BaseSystemFields<Texpand>
-export type LikesResponse<Texpand = unknown> = Required<LikesRecord> & BaseSystemFields<Texpand>
 export type OrdersResponse<TproductOptions = unknown, Texpand = unknown> = Required<OrdersRecord<TproductOptions>> & BaseSystemFields<Texpand>
 export type ProductsResponse<Toptions = unknown, Texpand = unknown> = Required<ProductsRecord<Toptions>> & BaseSystemFields<Texpand>
-export type ProfileSettingsResponse<Texpand = unknown> = Required<ProfileSettingsRecord> & BaseSystemFields<Texpand>
-export type ReviewsResponse<Texpand = unknown> = Required<ReviewsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -213,11 +176,8 @@ export type CollectionRecords = {
 	_superusers: SuperusersRecord
 	banners: BannersRecord
 	categories: CategoriesRecord
-	likes: LikesRecord
 	orders: OrdersRecord
 	products: ProductsRecord
-	profileSettings: ProfileSettingsRecord
-	reviews: ReviewsRecord
 	users: UsersRecord
 }
 
@@ -229,11 +189,8 @@ export type CollectionResponses = {
 	_superusers: SuperusersResponse
 	banners: BannersResponse
 	categories: CategoriesResponse
-	likes: LikesResponse
 	orders: OrdersResponse
 	products: ProductsResponse
-	profileSettings: ProfileSettingsResponse
-	reviews: ReviewsResponse
 	users: UsersResponse
 }
 

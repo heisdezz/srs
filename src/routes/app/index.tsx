@@ -11,7 +11,7 @@ export const Route = createFileRoute("/app/")({
 function RouteComponent() {
   return (
     <>
-      <div className="mb-22">
+      <div className="mb-22 mt-12">
         <AppHero />
       </div>
 

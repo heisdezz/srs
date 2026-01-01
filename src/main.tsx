@@ -7,6 +7,7 @@ import { routeTree } from "./routeTree.gen";
 
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
+import { pb } from "./api/apiClient.tsx";
 
 // Create a new router instance
 //@ts-ignore
@@ -26,7 +27,6 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
-
 // Render the app
 const rootElement = document.getElementById("app");
 if (rootElement && !rootElement.innerHTML) {

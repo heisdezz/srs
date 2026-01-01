@@ -1,6 +1,7 @@
 import { useUser } from "@/helpers/client";
 import { createFileRoute } from "@tanstack/react-router";
 import DeliverySettings from "./-components/DeliverySettings";
+import ProfileSettings from "./-components/ProfileSettings";
 export const Route = createFileRoute("/app/profile/")({
   component: RouteComponent,
 });
@@ -21,6 +22,7 @@ function RouteComponent() {
       </section>
       <section className="px-4 container mx-auto mt-4 grid md:grid-cols-2 gap-4">
         <DeliverySettings></DeliverySettings>
+        <ProfileSettings />
       </section>
     </div>
   );

@@ -67,11 +67,9 @@ export default function CompLoader<TData>(props: PageLoader<TData>) {
   if (props.query.isSuccess && props.query.data)
     return (
       <>
-        <div className={` min-h-[${minHeight}px]`}>
-          {typeof props.children === "function"
-            ? props.children(props.query.data) // ✅ fully inferred
-            : props.children}
-        </div>
+        {typeof props.children === "function"
+          ? props.children(props.query.data) // ✅ fully inferred
+          : props.children}
       </>
     );
 }
