@@ -40,7 +40,7 @@ export default function AppHero() {
                     </button>
                   </div>
                   {/*// collections*/}
-                  <div className="p-6 **:m-0 ring rounded-box fade flex gap-4">
+                  <div className="p-6 **:m-0 ring rounded-box fade flex gap-4 !mt-8">
                     <div className="">
                       <h2>500+</h2>
                       <p>Styles</p>
