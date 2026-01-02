@@ -16,18 +16,14 @@ export default function Card(props: { item: ProductsResponse }) {
       : "https://fastly.picsum.photos/id/866/536/354.jpg?hmac=tGofDTV7tl2rprappPzKFiZ9vDh5MKj39oa2D--gqhA";
 
   return (
-    <Link
-      to={`/app/product/${item.id}`}
-      className="bg-base-200 shadow-md relative isolate  rounded-box h-120 flex-col flex ring fade space-y-2 "
-    >
-      {/*//rating and owner info*/}
+    <Link to={`/app/product/${item.id}`} className="relative">
       <div className="absolute rounded-t-box top-0 left-0 right-0 p-2 bg-linear-180 from-neutral/40 via-neutral/20">
         <span className="badge badge-primary">
           <Star className="fill-current size-3" /> 4.5 / 5{" "}
           <span className="text-current/60">(425)</span>
         </span>
       </div>
-      <div className="h-52 flex">
+      <div className="h-52 flex rounded-box ring overflow-hidden fade">
         <figure className="flex-1 flex  bg-base-300 rounded-t-box overflow-hidden">
           <img
             className="flex-1 object-contain"
@@ -37,7 +33,7 @@ export default function Card(props: { item: ProductsResponse }) {
         </figure>
       </div>
       {/*//product info*/}
-      <div className="flex flex-col space-y-2 p-4 flex-1  ">
+      <div className="flex flex-col space-y-2 p-4 flex-1   -mt-8 z-20 ring fade rounded-b-box">
         <div aria-label="product status">
           <span className="badge badge-soft badge-success ring fade">
             New In
@@ -45,7 +41,7 @@ export default function Card(props: { item: ProductsResponse }) {
         </div>
         <h2 className="text-xl font-bold ">{item.name || "Product Name"} </h2>{" "}
         {/* Use item.name */}
-        <p className="text-base-content/80 line-clamp-3">
+        <p className="text-base-content/80 line-clamp-3 h-20">
           {item.description || "No description available."}{" "}
           {/* Use item.description */}
         </p>
