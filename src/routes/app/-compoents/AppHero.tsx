@@ -5,30 +5,22 @@ import { useQuery } from "@tanstack/react-query";
 import { pb } from "@/api/apiClient";
 import CompLoader from "@/components/layouts/ComponentLoader";
 import type { BannersResponse } from "pocketbase-types";
-import { Link } from "@tanstack/react-router";
-import { get_image } from "@/helpers/client";
 import HeroGrid from "./HeroGrid";
 
 export default function AppHero() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const query = useQuery<BannersResponse[]>({
     queryKey: ["heroBanners"],
     queryFn: async () => {
-      let resp = await pb.collection("banners").getFullList();
+      let resp = await pb.collection("banners").getFullList({
+        expand: "product_id",
+      });
       return resp;
     },
   });
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
 
   return (
     <div className="min-h-155 flex w-full ">
-      <CompLoader query={query} minHeight={620}>
+      <CompLoader query={query}>
         {(data) => {
           return (
             <>

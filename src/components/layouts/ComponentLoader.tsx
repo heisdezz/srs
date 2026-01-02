@@ -5,19 +5,16 @@ interface PageLoader<TData> {
   children?: React.ReactNode | ((data: TData) => React.ReactNode);
   query: QueryObserverResult<TData>;
   customLoading?: React.ReactNode;
-  minHeight?: number;
 }
 
 export default function CompLoader<TData>(props: PageLoader<TData>) {
-  const { query, customLoading, minHeight } = props;
+  const { query, customLoading } = props;
   if (query.isLoading) {
     if (customLoading) {
       return customLoading;
     }
     return (
-      <div
-        className={`${minHeight ? `min-h-${minHeight}` : "min-h-screen"} p-6 grid place-items-center bg-base-200`}
-      >
+      <div className={` flex-1 p-6 grid place-items-center bg-base-200`}>
         <div className="flex flex-col items-center space-y-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -45,9 +42,7 @@ export default function CompLoader<TData>(props: PageLoader<TData>) {
     const error = extract_message(query.error as any);
     return (
       <>
-        <div
-          className={`p-4 min-h-[${minHeight}px] grid place-items-center bg-base-300 rounded-md`}
-        >
+        <div className={`p-4  grid place-items-center bg-base-300 rounded-md`}>
           <div className="p-4 space-y-4">
             <div className="text-lg text-center fieldset-label font-bold wrap-anywhere">
               {error}
