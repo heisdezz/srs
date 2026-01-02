@@ -24,7 +24,7 @@ export default function AppHero() {
         {(data) => {
           return (
             <>
-              <div className="flex-1 container mx-auto grid lg:grid-cols-2 gap-4">
+              <div className="flex-1 container mx-auto grid lg:grid-cols-2 gap-4 px-4">
                 <div className="flex-col flex justify-center prose *:m-0 gap-6 ">
                   <h1 className="text-5xl">
                     Elevate Your Style with Exquisite Items.

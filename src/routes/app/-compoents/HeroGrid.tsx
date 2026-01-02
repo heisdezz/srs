@@ -4,7 +4,7 @@ import type { BannersResponse, ProductsRecord } from "pocketbase-types";
 
 export default function HeroGrid({ items }: { items: BannersResponse[] }) {
   return (
-    <div className="flex-1  grid md:grid-cols-2 gap-4 p-4">
+    <div className="flex-1  grid md:grid-cols-2 gap-4">
       <div className="bg-primary flex rounded-box">
         <ImageCard item={items[0]} />
       </div>
