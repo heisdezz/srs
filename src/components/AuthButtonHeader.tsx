@@ -37,10 +37,10 @@ export default function AuthButtonHeader() {
               </Link>
             </li>
             <li>
-              <Link to="/auth/logout">
+              <a href="/auth/logout">
                 <LogOut className="size-4" />
                 logout
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

@@ -55,10 +55,10 @@ export default function AppDrawer() {
           </>
         ) : (
           <li>
-            <Link to="/auth/login" className="text-lg">
+            <a href="/auth/login" className="text-lg">
               {" "}
               Login
-            </Link>
+            </a>
           </li>
         )}
       </div>
