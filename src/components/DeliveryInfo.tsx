@@ -9,7 +9,7 @@ import CompLoader from "./layouts/ComponentLoader";
 export function DeliveryInfo() {
   const { user } = useUser();
   const defaultDeliverySettings = {
-    user: user.id,
+    // user: user.id,
     street: "",
     city: "",
     state: "",
@@ -26,7 +26,7 @@ export function DeliveryInfo() {
           if (stat.status === 404) {
             pb.collection("deliverySettings").create({
               id: user.id,
-              user: user.id,
+              user_id: user.id,
               street: "",
               city: "",
               state: "",
