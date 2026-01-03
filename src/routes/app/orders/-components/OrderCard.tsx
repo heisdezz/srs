@@ -36,7 +36,9 @@ export default function OrderCard({
             <h2 className="font-bold text-base md:text-lg">
               {product_info.name}
             </h2>
-            <p className="text-sm md:text-base">Quantity: {item.quantity}</p>
+            <p className="">
+              Quantity: <span className="text-info">{item.quantity} Items</span>
+            </p>
             <ul className="mt-1 ">
               {options.map((option) => {
                 return (
