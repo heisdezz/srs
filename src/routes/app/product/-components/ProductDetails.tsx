@@ -1,3 +1,4 @@
+import { pb } from "@/api/apiClient";
 import { DeliveryInfo } from "@/components/DeliveryInfo";
 import { get_image, validateItems } from "@/helpers/client";
 import { useCartStore } from "@/store/client";
@@ -35,6 +36,7 @@ export default function ProductDetails({
   const { handleSubmit, watch, control } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    !pb.authStore.isValid && toast.error("Please Login to Add to Cart");
     let isValid = validateItems(data);
     if (item.options && !isValid) return toast.error("Please Fill All Fields");
 

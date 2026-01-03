@@ -60,18 +60,6 @@ export const validate_user = () => {
   pb.authStore.clear();
 };
 
-export const useDeliverySettings = () => {
-  let street = "8, ogunbadejo street";
-  let city = "somolu";
-  let state = "lagos";
-  let country = "Nigeria";
-  let zip = "100023";
-
-  let fullAddress = `${street}, ${city}, ${state}, ${country}, ${zip}`;
-
-  return { street, city, state, zip, country, fullAddress };
-};
-
 export const get_image = (item: Record<string, unknown>, file_name: string) => {
   return pb.files.getURL(item, file_name);
 };

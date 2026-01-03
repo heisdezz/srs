@@ -96,3 +96,39 @@ export const useFiltersStore = () => {
     resetFilters,
   };
 };
+interface DeliverySettingsProps {
+  street: string | null;
+  city: string | null;
+  state: string | null;
+  zip: string | null;
+  country: string | null;
+}
+
+const delivery_settings_atom = atom<DeliverySettingsProps>({
+  street: null,
+  city: null,
+  state: null,
+  country: null,
+  zip: null,
+});
+
+export const useDeliverySettings = () => {
+  const [deliverySettings, setDeliverySettings] = useAtom(
+    delivery_settings_atom,
+  );
+  const { street, city, state, zip, country } = deliverySettings;
+  const isValid = Object.keys(deliverySettings).every(
+    (key) => deliverySettings[key] !== null,
+  );
+  const full_address = `${street}, ${city}, ${state}, ${country}, ${zip}`;
+
+  const updateDeliverySettings = (newSettings: DeliverySettingsProps) => {
+    setDeliverySettings(newSettings);
+  };
+  return {
+    ...deliverySettings,
+    isValid,
+    full_address,
+    updateDeliverySettings,
+  };
+};

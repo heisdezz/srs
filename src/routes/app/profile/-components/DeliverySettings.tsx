@@ -1,5 +1,5 @@
 import SimpleInput from "@/components/inputs/SimpleInput";
-import { useDeliverySettings } from "@/helpers/client";
+import { useDeliverySettings } from "@/store/client";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function DeliverySettings() {
@@ -18,7 +18,7 @@ export default function DeliverySettings() {
           <SimpleInput {...form.register("country")} label="Country" />
         </FormProvider>
         <div className="p-4 ring fade rounded-md shadow">
-          {props.fullAddress}
+          {props.full_address}
         </div>
       </div>
     </div>
