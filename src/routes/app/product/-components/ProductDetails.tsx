@@ -36,7 +36,8 @@ export default function ProductDetails({
   const { handleSubmit, watch, control } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    !pb.authStore.isValid && toast.error("Please Login to Add to Cart");
+    if (!pb.authStore.isValid)
+      return toast.error("Please Login to Add to Cart");
     let isValid = validateItems(data);
     if (item.options && !isValid) return toast.error("Please Fill All Fields");
 

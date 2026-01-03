@@ -1,4 +1,5 @@
 import { useDeliverySettings } from "@/store/client";
+import { Link } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 
 export function DeliveryInfo() {
@@ -11,9 +12,15 @@ export function DeliveryInfo() {
 
       {!isValid && (
         <div className="p-4">
-          <p className="text-error text-sm mb-2">
-            Delivery information not set
-          </p>
+          <div className="flex items-center mb-2 justify-between">
+            <p className="text-error text-sm ">Delivery information not set</p>
+            <Link
+              to="/app/profile"
+              className="btn btn-sm btn-soft ring fade btn-info"
+            >
+              Edit
+            </Link>
+          </div>
           <p className="bg-error/20 ring mb-2 rounded-box p-4 fade ring-error/50">
             Invalid address
           </p>

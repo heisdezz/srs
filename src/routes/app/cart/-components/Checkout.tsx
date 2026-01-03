@@ -6,7 +6,7 @@ import {
   compute_total_price,
   useUser,
 } from "@/helpers/client";
-import { useCartStore } from "@/store/client";
+import { useCartStore, useDeliverySettings } from "@/store/client";
 import type { CartItemOption, OrderType } from "@/types";
 import { PaystackButton } from "react-paystack";
 import { toast } from "sonner";
@@ -15,6 +15,7 @@ import { usePaystackPayment } from "react-paystack";
 import { extract_message } from "@/helpers/api";
 import type { OrdersRecord } from "pocketbase-types";
 export default function Checkout() {
+  const { isValid } = useDeliverySettings();
   const initialize = usePaystackPayment(null);
   const user = useUser();
   const props = useCartStore();
@@ -25,6 +26,7 @@ export default function Checkout() {
     console.log(reference);
   };
   const create_orders = async () => {
+    if (!isValid) return toast.error("Please fill in your delivery details");
     await pb
       .collection("users")
       .authRefresh()
