@@ -38,13 +38,13 @@ export default function AppDrawer() {
       <div className="menu w-full space-y-2">
         <li>
           {links.map((link) => (
-            <Link key={link.path} to={link.path}>
+            <Link key={link.path} to={link.path} className="text-lg">
               {link.label}
             </Link>
           ))}
         </li>
       </div>
-      <div className="mt-auto px-4 menu">
+      <div className="mt-auto  menu">
         {user ? (
           <>
             {profile_links.map((link) => (
@@ -55,7 +55,10 @@ export default function AppDrawer() {
           </>
         ) : (
           <li>
-            <Link to="/auth/login">Login</Link>
+            <Link to="/auth/login" className="text-lg">
+              {" "}
+              Login
+            </Link>
           </li>
         )}
       </div>
