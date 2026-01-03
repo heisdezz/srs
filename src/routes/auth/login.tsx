@@ -39,7 +39,9 @@ function RouteComponent() {
             className="p-6 ring bg-base-100/80 backdrop-blur-md fade rounded-lg shadow w-full max-w-md space-y-4"
           >
             <div className="h-18 grid place-items-center">
-              <div className="h-full aspect-square ring fade rounded-box shadow"></div>
+              <div className="h-full aspect-square  rounded-box ring fade bg-primary/10   grid place-items-center font-lobster-two text-3xl font-bold">
+                SRU
+              </div>
             </div>
             <div className="text-center">
               <h2 className="font-bold text-2xl">Sign In To Continue</h2>

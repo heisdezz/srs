@@ -7,7 +7,7 @@ export default function AppHero() {
       <>
         <div className="flex-1 container mx-auto grid lg:grid-cols-2 gap-12 px-4">
           <div className="flex-col flex justify-center prose *:m-0 gap-6 ">
-            <h1 className="text-5xl">
+            <h1 className="text-5xl  leading-tight">
               Define Your Style with Our Fashion Accessories.
             </h1>
             <p>
