@@ -1,22 +1,21 @@
 import { pb } from "@/api/apiClient";
 import SimpleInput from "@/components/inputs/SimpleInput";
 import { useUser, validateItems } from "@/helpers/client";
-import { useDeliverySettings } from "@/store/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
-
+const defaultDeliverySettings = {
+  user: user.id,
+  street: "",
+  city: "",
+  state: "",
+  country: "",
+  zip: "",
+};
 export default function DeliverySettings() {
   const { user } = useUser();
-  const defaultDeliverySettings = {
-    user: user.id,
-    street: "",
-    city: "",
-    state: "",
-    country: "",
-    zip: "",
-  };
+
   const query = useQuery({
     queryKey: ["delvierySettings"],
     queryFn: () =>
