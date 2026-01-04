@@ -2,6 +2,7 @@ import { pb } from "@/api/apiClient";
 import SimpleInput from "@/components/inputs/SimpleInput";
 import CompLoader from "@/components/layouts/ComponentLoader";
 import { useUser, validateItems } from "@/helpers/client";
+import { validate_addr } from "@/store/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { DeliverySettingsResponse } from "pocketbase-types";
 import { useEffect } from "react";
@@ -88,8 +89,9 @@ const DeliveryForm = ({
     }
     return toast.error("Not Complete/Valid");
   };
+  const props = validate_addr(initial as any);
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
       <FormProvider {...form}>
         <SimpleInput {...form.register("street")} label="Street" />
         <SimpleInput {...form.register("city")} label="City" />
@@ -97,7 +99,11 @@ const DeliveryForm = ({
         <SimpleInput {...form.register("country")} label="Country" />
         <SimpleInput {...form.register("zip")} label="Zip" />
       </FormProvider>
-      <div className="p-4 space-y-4">
+
+      <div className="text-sm p-2 ring fade rounded-box ">
+        {props.full_address}
+      </div>
+      <div className="space-y-4">
         <button className="btn btn-sm btn-primary btn-block ">Submit</button>
       </div>
     </form>
