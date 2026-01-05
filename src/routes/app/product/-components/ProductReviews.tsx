@@ -22,10 +22,11 @@ export default function ProductReviews({ productId }: { productId: string }) {
     queryFn: async () => {
       let resp = await pb
         .collection("reviews")
-        .getFullList<ReviewsResponse<{ user_id: UsersResponse }>>({
+        .getList<ReviewsResponse<{ user_id: UsersResponse }>>(1, 3, {
           filter: `product_id = "${productId}"`,
           sort: "-created",
           expand: "user_id",
+          skipTotal: true,
         });
       return resp;
     },
@@ -140,7 +141,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
             {reviews.data?.map((review) => (
               <div
                 key={review.id}
-                className="p-5 rounded-2xl bg-base-100 border border-base-200 shadow-sm flex gap-4 transition-all hover:border-primary/30"
+                className="p-5 rounded-2xl bg-base-100 border border-base-200 shadow-sm flex gap-4 transition-all hover:border-primary/30 ring fade"
               >
                 <div className="avatar placeholder h-fit">
                   <div className="bg-neutral text-neutral-content rounded-full w-10 h-10 ring-1 ring-base-300">
