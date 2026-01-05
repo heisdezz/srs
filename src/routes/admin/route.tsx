@@ -1,12 +1,19 @@
 import PageContainer from "@/components/layouts/PageContainer";
 import { useUser } from "@/helpers/client";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import AdminNavBar from "./-components/AdminNavBar";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
   loader: () => {
-    const user = useUser();
+    const { user } = useUser();
+    if (user.collectionName != "admins")
+      return redirect({
+        to: "/",
+        replace: true,
+      });
+
+    return null;
   },
 });
 
@@ -21,11 +28,8 @@ function RouteComponent() {
           Open drawer
         </label>*/}
           <AdminNavBar />
-
-          <main className="space-y-12">
-            <PageContainer>
-              <Outlet />
-            </PageContainer>
+          <main className="p-4 pt-8 container mx-auto space-y-8">
+            <Outlet />
           </main>
           {/*<DrawerContent />*/}
         </div>
@@ -35,7 +39,7 @@ function RouteComponent() {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className=" bg-base-200 min-h-full w-2xs md:border-r fade flex">
+          <div className=" bg-base-200 min-h-full w-3xs md:border-r fade flex">
             {/* Sidebar content here */}
             {/*<AppDrawer />*/}
           </div>
