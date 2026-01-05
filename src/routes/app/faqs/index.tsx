@@ -3,7 +3,7 @@ import PageFooter from "@/components/PageFooter";
 import PageHeader from "@/components/PageHeader";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/faqs/")({
+export const Route = createFileRoute("/app/faqs/")({
   component: RouteComponent,
 });
 
@@ -58,7 +58,6 @@ function RouteComponent() {
 
   return (
     <>
-      <PageHeader />
       <div className="h-52 bg-base-300 w-full">
         <div className="container mx-auto px-4 h-full flex flex-col justify-center gap-2">
           <h2 className="text-2xl md:text-4xl font-bold">

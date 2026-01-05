@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteRouteImport } from './routes/auth/route'
 import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as FaqsIndexRouteImport } from './routes/faqs/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
@@ -22,6 +21,7 @@ import { Route as AppOrdersRouteRouteImport } from './routes/app/orders/route'
 import { Route as AppProfileIndexRouteImport } from './routes/app/profile/index'
 import { Route as AppProductsIndexRouteImport } from './routes/app/products/index'
 import { Route as AppOrdersIndexRouteImport } from './routes/app/orders/index'
+import { Route as AppFaqsIndexRouteImport } from './routes/app/faqs/index'
 import { Route as AppCartIndexRouteImport } from './routes/app/cart/index'
 import { Route as AppProductIdRouteImport } from './routes/app/product/$id'
 import { Route as AppOrderOrderIdRouteImport } from './routes/app/order/$orderId'
@@ -39,11 +39,6 @@ const AppRouteRoute = AppRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqsIndexRoute = FaqsIndexRouteImport.update({
-  id: '/faqs/',
-  path: '/faqs/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -91,6 +86,11 @@ const AppOrdersIndexRoute = AppOrdersIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppOrdersRouteRoute,
 } as any)
+const AppFaqsIndexRoute = AppFaqsIndexRouteImport.update({
+  id: '/faqs/',
+  path: '/faqs/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppCartIndexRoute = AppCartIndexRouteImport.update({
   id: '/cart/',
   path: '/cart/',
@@ -117,10 +117,10 @@ export interface FileRoutesByFullPath {
   '/auth/logout': typeof AuthLogoutRoute
   '/auth/signup': typeof AuthSignupRoute
   '/app/': typeof AppIndexRoute
-  '/faqs': typeof FaqsIndexRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
   '/app/product/$id': typeof AppProductIdRoute
   '/app/cart': typeof AppCartIndexRoute
+  '/app/faqs': typeof AppFaqsIndexRoute
   '/app/orders/': typeof AppOrdersIndexRoute
   '/app/products/': typeof AppProductsIndexRoute
   '/app/profile': typeof AppProfileIndexRoute
@@ -132,10 +132,10 @@ export interface FileRoutesByTo {
   '/auth/logout': typeof AuthLogoutRoute
   '/auth/signup': typeof AuthSignupRoute
   '/app': typeof AppIndexRoute
-  '/faqs': typeof FaqsIndexRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
   '/app/product/$id': typeof AppProductIdRoute
   '/app/cart': typeof AppCartIndexRoute
+  '/app/faqs': typeof AppFaqsIndexRoute
   '/app/orders': typeof AppOrdersIndexRoute
   '/app/products': typeof AppProductsIndexRoute
   '/app/profile': typeof AppProfileIndexRoute
@@ -151,10 +151,10 @@ export interface FileRoutesById {
   '/auth/logout': typeof AuthLogoutRoute
   '/auth/signup': typeof AuthSignupRoute
   '/app/': typeof AppIndexRoute
-  '/faqs/': typeof FaqsIndexRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
   '/app/product/$id': typeof AppProductIdRoute
   '/app/cart/': typeof AppCartIndexRoute
+  '/app/faqs/': typeof AppFaqsIndexRoute
   '/app/orders/': typeof AppOrdersIndexRoute
   '/app/products/': typeof AppProductsIndexRoute
   '/app/profile/': typeof AppProfileIndexRoute
@@ -171,10 +171,10 @@ export interface FileRouteTypes {
     | '/auth/logout'
     | '/auth/signup'
     | '/app/'
-    | '/faqs'
     | '/app/order/$orderId'
     | '/app/product/$id'
     | '/app/cart'
+    | '/app/faqs'
     | '/app/orders/'
     | '/app/products/'
     | '/app/profile'
@@ -186,10 +186,10 @@ export interface FileRouteTypes {
     | '/auth/logout'
     | '/auth/signup'
     | '/app'
-    | '/faqs'
     | '/app/order/$orderId'
     | '/app/product/$id'
     | '/app/cart'
+    | '/app/faqs'
     | '/app/orders'
     | '/app/products'
     | '/app/profile'
@@ -204,10 +204,10 @@ export interface FileRouteTypes {
     | '/auth/logout'
     | '/auth/signup'
     | '/app/'
-    | '/faqs/'
     | '/app/order/$orderId'
     | '/app/product/$id'
     | '/app/cart/'
+    | '/app/faqs/'
     | '/app/orders/'
     | '/app/products/'
     | '/app/profile/'
@@ -217,7 +217,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  FaqsIndexRoute: typeof FaqsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -241,13 +240,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faqs/': {
-      id: '/faqs/'
-      path: '/faqs'
-      fullPath: '/faqs'
-      preLoaderRoute: typeof FaqsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -313,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppOrdersIndexRouteImport
       parentRoute: typeof AppOrdersRouteRoute
     }
+    '/app/faqs/': {
+      id: '/app/faqs/'
+      path: '/faqs'
+      fullPath: '/app/faqs'
+      preLoaderRoute: typeof AppFaqsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/cart/': {
       id: '/app/cart/'
       path: '/cart'
@@ -367,6 +366,7 @@ interface AppRouteRouteChildren {
   AppOrderOrderIdRoute: typeof AppOrderOrderIdRoute
   AppProductIdRoute: typeof AppProductIdRoute
   AppCartIndexRoute: typeof AppCartIndexRoute
+  AppFaqsIndexRoute: typeof AppFaqsIndexRoute
   AppProfileIndexRoute: typeof AppProfileIndexRoute
 }
 
@@ -377,6 +377,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppOrderOrderIdRoute: AppOrderOrderIdRoute,
   AppProductIdRoute: AppProductIdRoute,
   AppCartIndexRoute: AppCartIndexRoute,
+  AppFaqsIndexRoute: AppFaqsIndexRoute,
   AppProfileIndexRoute: AppProfileIndexRoute,
 }
 
@@ -404,7 +405,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
-  FaqsIndexRoute: FaqsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

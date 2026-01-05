@@ -9,7 +9,7 @@ const links = [
     path: "/app/products",
     label: "Store",
   },
-  { path: "/faqs", label: "FAQs" },
+  { path: "/app/faqs", label: "FAQs" },
 ];
 
 export default function HeaderLinks() {

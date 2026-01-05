@@ -14,7 +14,7 @@ const links = [
     path: "/app/orders",
     label: "Orders",
   },
-  { path: "/faqs", label: "FAQs" },
+  { path: "/app/faqs", label: "FAQs" },
 ];
 
 const profile_links = [
