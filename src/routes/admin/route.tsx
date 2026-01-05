@@ -1,6 +1,7 @@
 import PageContainer from "@/components/layouts/PageContainer";
 import { useUser } from "@/helpers/client";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import AdminNavBar from "./-components/AdminNavBar";
 
 export const Route = createFileRoute("/admin")({
   component: RouteComponent,
@@ -19,9 +20,13 @@ function RouteComponent() {
           {/*<label htmlFor="products-drawer" className="btn drawer-button lg:hidden">
           Open drawer
         </label>*/}
-          <PageContainer>
-            <Outlet />
-          </PageContainer>
+          <AdminNavBar />
+
+          <main className="space-y-12">
+            <PageContainer>
+              <Outlet />
+            </PageContainer>
+          </main>
           {/*<DrawerContent />*/}
         </div>
         <div className="drawer-side">
