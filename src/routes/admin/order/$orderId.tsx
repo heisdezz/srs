@@ -44,7 +44,7 @@ function RouteComponent() {
           return (
             <>
               <div className="mx-auto max-w-4xl mb-6">
-                <OrderStatus status={data.status} />
+                <OrderStatus refetch={query.refetch} status={data.status} />
               </div>
 
               <div className="mx-auto max-w-4xl ring p-4 rounded-box fade mb-6">
