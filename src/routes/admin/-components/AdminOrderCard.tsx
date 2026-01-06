@@ -6,11 +6,7 @@ import type { OptionsConfig } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import type {
-  OrdersRecord,
-  OrdersResponse,
-  ProductsRecord,
-} from "pocketbase-types";
+import type { OrdersResponse, ProductsRecord } from "pocketbase-types";
 
 export default function AdminOrderCard({
   order,
@@ -20,8 +16,7 @@ export default function AdminOrderCard({
   const [showAddress, setShowAddress] = useState(false);
   const product = order.expand?.["productId"] as ProductsRecord;
   const date = new Date(order.created).toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "long",
+    month: "short",
     day: "numeric",
     year: "numeric",
   });
@@ -35,60 +30,57 @@ export default function AdminOrderCard({
   return (
     <div
       key={order.id}
-      className="group relative bg-base-100 border border-base-300 rounded-box overflow-hidden transition-all duration-300 hover:shadow-xl"
+      className="group relative bg-base-100 border border-base-300 rounded-[28px] overflow-hidden transition-shadow duration-200 hover:shadow-md"
     >
-      <div className="p-6 flex flex-col h-full gap-5">
-        {/* Header Section */}
-        <div className="flex justify-between items-start">
-          <div className="space-y-1.5">
+      <div className="p-4 md:p-6 flex flex-col h-full">
+        {/* Material Header */}
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
-              <span className="badge badge-ghost badge-sm font-bold tracking-wider uppercase">
+              <span className="text-[12px] font-medium tracking-wide text-primary uppercase">
                 #{order.refId || order.id.slice(0, 5)}
               </span>
-              <span className="text-[11px] font-medium text-base-content/60">
+              <span className="text-[12px] text-base-content/60">•</span>
+              <span className="text-[12px] text-base-content/60 font-medium">
                 {time}
               </span>
             </div>
-            <h2 className="text-xl font-semibold tracking-tight text-base-content">
+            <h2 className="text-xl font-medium text-base-content tracking-tight">
               {product?.name || "Product"}
             </h2>
           </div>
-          <div className="shrink-0 scale-90 origin-top-right">
-            {render_status(order.status as any)}
-          </div>
+          <div className="shrink-0">{render_status(order.status as any)}</div>
         </div>
 
-        {/* Info Grid */}
-        <div className="grid grid-cols-2 gap-8 py-4 border-y border-base-200">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[11px] font-semibold text-base-content/50 uppercase tracking-wide">
+        {/* Material Divider & Info */}
+        <div className="grid grid-cols-2 gap-4 py-4 border-t border-base-200">
+          <div>
+            <p className="text-[11px] font-medium text-base-content/50 uppercase tracking-widest mb-1">
               Order Date
-            </span>
-            <span className="text-sm font-medium text-base-content/80">
-              {date}
-            </span>
+            </p>
+            <p className="text-sm font-medium text-base-content/90">{date}</p>
           </div>
-          <div className="flex flex-col gap-0.5 items-end">
-            <span className="text-[11px] font-semibold text-base-content/50 uppercase tracking-wide">
+          <div className="text-right">
+            <p className="text-[11px] font-medium text-base-content/50 uppercase tracking-widest mb-1">
               Quantity
-            </span>
-            <span className="text-sm font-bold text-base-content">
+            </p>
+            <p className="text-sm font-bold text-base-content">
               {order.quantity}{" "}
-              <span className="text-base-content/40 font-normal">units</span>
-            </span>
+              <span className="font-normal opacity-60">pcs</span>
+            </p>
           </div>
         </div>
 
-        {/* Product Options */}
+        {/* Chips for Options */}
         {keys.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2 mb-6">
             {keys.map((item) => (
               <div
                 key={item}
-                className="px-2.5 py-1 rounded-md bg-base-200/50 border border-base-300 text-[12px] flex gap-1.5"
+                className="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-[11px] font-medium flex gap-1.5 items-center"
               >
-                <span className="text-base-content/50">{item}</span>
-                <span className="font-semibold text-base-content/80">
+                <span className="text-secondary/70">{item}:</span>
+                <span className="text-secondary font-bold">
                   {productOptions[item].values[0].label}
                 </span>
               </div>
@@ -96,46 +88,48 @@ export default function AdminOrderCard({
           </div>
         )}
 
-        {/* Pricing Section */}
-        <div className="flex justify-between items-center mt-2">
-          <div className="flex flex-col">
-            <span className="text-[11px] font-semibold text-base-content/50 uppercase tracking-wide">
-              Total
-            </span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-bold tracking-tighter text-base-content">
-                ₦{(order.price + order.deliveryFee).toLocaleString()}
+        {/* Pricing Section - Material Surface */}
+        <div className="bg-base-200/40 rounded-2xl p-4 mb-6">
+          <div className="flex justify-between items-end">
+            <div className="flex flex-col">
+              <span className="text-[11px] font-bold text-base-content/40 uppercase tracking-widest mb-1">
+                Total Amount
               </span>
-              <span className="text-[10px] text-base-content/50 font-medium">
-                NGN
-              </span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-bold tracking-tight text-base-content">
+                  ₦{(order.price + order.deliveryFee).toLocaleString()}
+                </span>
+                <span className="text-xs font-bold text-base-content/40">
+                  NGN
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="text-[10px] font-medium px-2 py-1 rounded bg-base-200 text-base-content/60">
-            Shipping Included
+            <div className="text-[10px] font-bold px-2 py-1 rounded-md bg-success/10 text-success uppercase tracking-tighter">
+              Paid
+            </div>
           </div>
         </div>
 
-        {/* Shipping Toggle */}
-        <div className="mt-2">
+        {/* Shipping Toggle - Material Text Button */}
+        <div className="mb-4">
           {showAddress ? (
-            <div className="animate-in fade-in zoom-in-95 duration-300">
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
               <ShippingAddress user_id={order.userId} />
             </div>
           ) : (
             <button
               onClick={() => setShowAddress(true)}
-              className="btn btn-ghost btn-xs w-full font-semibold text-base-content/60 hover:text-base-content transition-colors flex items-center justify-center gap-1"
+              className="btn btn-ghost btn-sm w-full normal-case font-bold text-primary hover:bg-primary/5 gap-2"
             >
-              Show Delivery Details
+              View Shipping Details
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="3"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -145,11 +139,11 @@ export default function AdminOrderCard({
           )}
         </div>
 
-        {/* Action Button */}
-        <div className="mt-auto pt-2">
+        {/* Action Button - Material Contained Button */}
+        <div className="mt-auto">
           <Link
             to={`/admin/order/${order.id}`}
-            className="btn btn-primary w-full rounded-xl text-sm font-bold transition-all active:scale-[0.98] shadow-lg"
+            className="btn btn-primary w-full rounded-full normal-case font-bold shadow-sm hover:shadow-md transition-shadow"
           >
             Manage Order
           </Link>
@@ -167,8 +161,8 @@ export const ShippingAddress = ({ user_id }: { user_id: string }) => {
   });
 
   return (
-    <div className="rounded-xl border border-base-300 bg-base-200/30 overflow-hidden">
-      <div className="px-3 py-2 bg-base-200/50 border-b border-base-300 flex items-center gap-2">
+    <div className="rounded-2xl border border-base-300 bg-base-100 overflow-hidden">
+      <div className="px-4 py-2.5 bg-base-200/30 border-b border-base-200 flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="14"
@@ -177,38 +171,36 @@ export const ShippingAddress = ({ user_id }: { user_id: string }) => {
           fill="none"
           stroke="currentColor"
           strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
           className="text-primary"
         >
           <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
           <circle cx="12" cy="10" r="3" />
         </svg>
-        <h2 className="text-[11px] font-bold uppercase tracking-wider text-base-content/70">
-          Shipping Address
+        <h2 className="text-[10px] font-bold uppercase tracking-[0.1em] text-base-content/60">
+          Delivery Destination
         </h2>
       </div>
-      <div className="p-3">
+      <div className="p-4">
         <CompLoader
           query={query}
           customError={() => (
-            <div className="flex items-center justify-between w-full gap-2">
+            <div className="flex items-center justify-between w-full">
               <span className="text-xs text-error font-medium">
-                Failed to load address
+                Load failed
               </span>
               <button
                 onClick={() => query.refetch()}
-                className="btn btn-ghost btn-xs text-error hover:bg-error/10"
+                className="btn btn-link btn-xs text-error no-underline font-bold"
               >
                 Retry
               </button>
             </div>
           )}
           customLoading={
-            <div className="flex items-center gap-3 py-1">
-              <span className="loading loading-spinner loading-xs text-primary"></span>
-              <span className="text-xs font-medium text-base-content/50">
-                Fetching details...
+            <div className="flex items-center gap-3">
+              <span className="loading loading-ring loading-xs text-primary"></span>
+              <span className="text-xs font-medium text-base-content/40">
+                Locating...
               </span>
             </div>
           }
@@ -216,7 +208,7 @@ export const ShippingAddress = ({ user_id }: { user_id: string }) => {
           {(data) => {
             const { full_address } = validate_addr(data);
             return (
-              <p className="text-sm leading-relaxed text-base-content/80 font-medium">
+              <p className="text-sm leading-relaxed text-base-content/70 font-medium italic">
                 {full_address || "No address provided"}
               </p>
             );
