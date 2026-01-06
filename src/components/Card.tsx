@@ -16,53 +16,69 @@ export default function Card(props: { item: ProductsResponse }) {
       : "https://fastly.picsum.photos/id/866/536/354.jpg?hmac=tGofDTV7tl2rprappPzKFiZ9vDh5MKj39oa2D--gqhA";
 
   return (
-    <Link to={`/app/product/${item.id}`} className="relative">
-      <div className="absolute rounded-t-box top-0 left-0 right-0 p-2 bg-linear-180 from-neutral/40 via-neutral/20">
-        <span className="badge badge-primary">
-          <Star className="fill-current size-3" /> 4.5 / 5{" "}
-          <span className="text-current/60">(425)</span>
-        </span>
-      </div>
-      <div className="h-52 flex rounded-box ring overflow-hidden fade">
-        <figure className="flex-1 flex  bg-base-300 rounded-t-box overflow-hidden">
-          <img
-            className="flex-1 object-contain"
-            src={imageUrl} // Use the dynamically generated image URL
-            alt={item.name || "Product image"} // Use item.name for alt text
-          />
-        </figure>
-      </div>
-      {/*//product info*/}
-      <div className="flex flex-col space-y-2 p-4 flex-1   -mt-8 z-20 ring fade rounded-b-box">
-        <div aria-label="product status">
-          <span className="badge badge-soft badge-success ring fade">
-            New In
+    <Link
+      to={`/app/product/${item.id}`}
+      className="group flex flex-col bg-base-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 border border-base-content/10"
+    >
+      {/* Image Container (M3 Card Media) */}
+      <div className="relative h-56 w-full overflow-hidden bg-base-300">
+        <img
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          src={imageUrl}
+          alt={item.name || "Product image"}
+        />
+        <div className="absolute top-3 left-3">
+          <span className="badge badge-primary font-medium shadow-sm border-none py-3 px-3">
+            <Star className="fill-current size-3 mr-1" /> 4.5
           </span>
         </div>
-        <h2 className="text-xl font-bold line-clamp-1">
-          {item.name || "Product Name"}{" "}
-        </h2>{" "}
-        {/* Use item.name */}
-        <p className="text-base-content/80 line-clamp-3 min-h-20 text-sm">
-          {item.description || "No description available."}{" "}
-          {/* Use item.description */}
+      </div>
+
+      {/* Content (M3 Card Content) */}
+      <div className="flex flex-col p-4 flex-1">
+        <div className="flex justify-between items-start mb-2">
+          <div className="flex flex-col gap-1">
+            <span className="text-[11px] uppercase tracking-wider font-bold text-success">
+              New Arrival
+            </span>
+            <h2 className="text-lg font-semibold text-base-content leading-tight line-clamp-1">
+              {item.name || "Product Name"}
+            </h2>
+          </div>
+        </div>
+
+        <p className="text-sm text-base-content/70 line-clamp-2 mb-4 flex-1">
+          {item.description || "No description available."}
         </p>
-        {/*price*/}
-        <div className="stats ring fade mt-auto">
-          <div className="stat ">
-            <p className="stat-title">Original Price</p>
-            <p className="text-base line-through text-error  font-semibold">
-              N {price.toLocaleString()}
-            </p>{" "}
-            {/* Use original price */}
-          </div>
-          <div className="stat ">
-            <p className="stat-title">Discount Price</p>
-            <p className="text-base font-bold">
+
+        {/* Price Section (M3 Supporting Text/Actions area) */}
+        <div className="pt-3 border-t border-base-content/5 flex items-end justify-between">
+          <div className="flex flex-col">
+            {item.discountPrice && (
+              <span className="text-xs line-through text-base-content/50">
+                N {price.toLocaleString()}
+              </span>
+            )}
+            <span className="text-xl font-black text-primary">
               N {discountPrice.toLocaleString()}
-            </p>{" "}
-            {/* Use discountPrice */}
+            </span>
           </div>
+          <button className="btn btn-circle btn-ghost btn-sm text-base-content/60 group-hover:text-primary transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </Link>
