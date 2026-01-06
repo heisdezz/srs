@@ -5,10 +5,11 @@ interface PageLoader<TData> {
   children?: React.ReactNode | ((data: TData) => React.ReactNode);
   query: QueryObserverResult<TData>;
   customLoading?: React.ReactNode;
+  customError?: (data: any) => React.ReactNode;
 }
 
 export default function CompLoader<TData>(props: PageLoader<TData>) {
-  const { query, customLoading } = props;
+  const { query, customLoading, customError } = props;
   if (query.isLoading) {
     if (customLoading) {
       return customLoading;
@@ -40,6 +41,9 @@ export default function CompLoader<TData>(props: PageLoader<TData>) {
   }
   if (query.error) {
     const error = extract_message(query.error as any);
+    if (customError) {
+      return customError(error);
+    }
     return (
       <>
         <div className={`p-4  grid place-items-center bg-base-300 rounded-md`}>

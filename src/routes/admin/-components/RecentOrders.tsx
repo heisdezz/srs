@@ -1,8 +1,6 @@
 import { pb } from "@/api/apiClient";
 import CompContainer from "@/components/layouts/CompContainer";
-import { render_status } from "@/helpers/ui";
 import { useQuery } from "@tanstack/react-query";
-import type { OrdersResponse, ProductsRecord } from "pocketbase-types";
 import AdminOrderCard from "./AdminOrderCard";
 
 export default function RecentOrders() {
@@ -18,9 +16,7 @@ export default function RecentOrders() {
     <CompContainer title="Recent Orders">
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,auto))] gap-4">
         {query.data?.items.map((order) => {
-          return (
-            <AdminOrderCard order={order as OrdersResponse<ProductsRecord>} />
-          );
+          return <AdminOrderCard order={order as any} />;
         })}
       </div>
     </CompContainer>

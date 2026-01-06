@@ -8,7 +8,13 @@ import { useUser, validate_user } from "@/helpers/client";
 const client = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 2,
+      retry: (failureCount, error: any) => {
+        // PocketBase returns 404 when record not found
+        if (error?.status === 404) return false;
+
+        // Optional: stop after 2 retries
+        return failureCount < 2;
+      },
     },
   },
 });

@@ -5,11 +5,11 @@ import { get_image } from "@/helpers/client";
 import type { OptionsConfig } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useParams } from "@tanstack/react-router";
-import type { ProductsRecord } from "pocketbase-types";
-import OrderStatus from "./-components/OrderStatus";
-import { ShippingAddress } from "@/routes/admin/-components/AdminOrderCard";
+import type { ProductsRecord, UsersRecord } from "pocketbase-types";
+import OrderStatus from "./-components/AdminOrderStatus";
+import { ShippingAddress } from "../-components/AdminOrderCard";
 
-export const Route = createFileRoute("/app/order/$orderId")({
+export const Route = createFileRoute("/admin/order/$orderId")({
   component: RouteComponent,
 });
 
@@ -21,13 +21,13 @@ function RouteComponent() {
     queryKey: ["order", orderId],
     queryFn: async () => {
       let resp = pb.collection("orders").getOne(orderId, {
-        expand: "productId",
+        expand: "productId, userId, deliverySettings_via_user_id",
       });
       return resp;
     },
   });
   return (
-    <div className="mx-auto container px-4 min-h-screen py-12 space-y-4">
+    <div className="mx-auto container px-4 min-h-screen py-6 space-y-4">
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold">Order Details</h1>
         <p className="text-xl">Order ID: {orderId}</p>
@@ -38,17 +38,36 @@ function RouteComponent() {
           const product = data.expand[
             "productId"
           ] as ProductsRecord<OptionsConfig>;
+
+          const user = data.expand["userId"] as UsersRecord;
+
           return (
             <>
-              <div className="mx-auto max-w-2xl mb-6">
+              <div className="mx-auto max-w-4xl mb-6">
                 <OrderStatus status={data.status} />
               </div>
-              <div className="ring mx-auto max-w-2xl p-4 rounded-box fade">
+
+              <div className="mx-auto max-w-4xl ring p-4 rounded-box fade mb-6">
+                <h3 className="text-lg font-bold mb-2 border-b pb-2">
+                  Customer Information
+                </h3>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <p className="font-semibold">Name:</p>
+                  <p>{user.fullName || "N/A"}</p>
+                  <p className="font-semibold">Email:</p>
+                  <p>{user.email}</p>
+                  <p className="font-semibold">User ID:</p>
+                  <p className="font-mono text-xs">{user.id}</p>
+                  {/*<p className="font-semibold">Verified:</p>
+                  <p>{user.verified ? "✅ Yes" : "❌ No"}</p>*/}
+                </div>
+              </div>
+
+              <div className="ring mx-auto max-w-4xl p-4 rounded-box fade">
                 <SimpleCarousel>
-                  {data.expand["productId"].images.map((item) => {
+                  {data.expand["productId"].images.map((item: string) => {
                     return (
-                      <div className="h-120 bg-base-300 flex">
-                        {/*{JSON.stringify(item.)}*/}
+                      <div key={item} className="h-120 bg-base-300 flex">
                         <img
                           className="flex-1 object-contain"
                           src={get_image(data.expand["productId"], item)}
@@ -69,11 +88,6 @@ function RouteComponent() {
                       Total: N{" "}
                       {(data.price + data.deliveryFee).toLocaleString()}
                     </p>
-                    {/*{product.discountPrice && (
-                      <p className="text-lg text-gray-500 line-through">
-                        ${product.price.toFixed(2)}
-                      </p>
-                    )}*/}
                   </div>
                   <p className="text-current/80 text-lg font-bold">
                     Quantity:
