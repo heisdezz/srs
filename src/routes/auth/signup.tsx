@@ -12,6 +12,7 @@ interface SignupFormInputs {
   email: string;
   password: string;
   passwordConfirm: string;
+  emailVisibility: boolean;
 }
 
 export const Route = createFileRoute("/auth/signup")({
@@ -26,6 +27,7 @@ function RouteComponent() {
       email: "",
       password: "",
       passwordConfirm: "",
+      emailVisibility: true,
     },
   });
 

@@ -68,10 +68,10 @@ export function DeliveryInfo() {
             );
           }
           return (
-            <div className="p-6">
+            <div className="p-4">
               {!addr.isValid && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between ">
                     <div className="flex items-center gap-2 text-error">
                       <AlertCircle className="size-5" />
                       <span className="text-sm font-bold uppercase tracking-widest">
@@ -93,7 +93,7 @@ export function DeliveryInfo() {
               )}
 
               {addr.isValid && (
-                <div className="flex items-start gap-5 bg-base-200/40 p-6 rounded-[1.75rem] border border-base-300/30">
+                <div className="flex items-start gap-5  p-6 rounded-[1.75rem] ">
                   <div className="bg-primary p-3.5 rounded-2xl shadow-lg shadow-primary/20">
                     <MapPin className="size-6 text-primary-content" />
                   </div>
