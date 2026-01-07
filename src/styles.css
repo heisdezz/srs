@@ -64,5 +64,5 @@
 }
 
 @utility rounded-sleek {
-  @apply rounded-[2rem];
+  @apply rounded-[1.75rem];
 }
