@@ -27,7 +27,7 @@ export default function Carousel({ item }: { item: any }) {
   return (
     <>
       <div className="w-full  h-100 flex">
-        <figure className="embla flex-1  bg-base-300/50 rounded-box ring fade">
+        <figure className="embla flex-1  bg-base-300/50 rounded-sleek ring fade">
           <div className="embla__viewport h-full" ref={emblaRef}>
             <div className="embla__container h-full">
               {images.length > 0 ? (
@@ -60,7 +60,7 @@ export default function Carousel({ item }: { item: any }) {
           <button
             key={index}
             onClick={() => handleImageClick(index)}
-            className={`btn h-18 aspect-video w-full btn-soft ring rounded-box p-0 overflow-hidden ${
+            className={`btn h-18 aspect-video w-full btn-soft ring rounded-sleek p-0 overflow-hidden ${
               index === selectedIndex
                 ? "btn-accent ring-2 ring-accent"
                 : "btn-ghost"
@@ -71,7 +71,7 @@ export default function Carousel({ item }: { item: any }) {
               src={get_image(item, imageName)}
               alt={`Thumbnail ${index + 1}`}
               style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              className="rounded-box"
+              className="rounded-sleek"
             />
           </button>
         ))}

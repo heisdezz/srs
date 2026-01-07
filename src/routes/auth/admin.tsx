@@ -38,7 +38,7 @@ function RouteComponent() {
             className="p-6 ring bg-base-100/80 backdrop-blur-md fade rounded-lg shadow w-full max-w-md space-y-4"
           >
             <div className="h-18 grid place-items-center">
-              <div className="h-full aspect-square  rounded-box ring fade bg-primary/10   grid place-items-center font-lobster-two text-3xl font-bold">
+              <div className="h-full aspect-square  rounded-sleek ring fade bg-primary/10   grid place-items-center font-lobster-two text-3xl font-bold">
                 SRU
               </div>
             </div>
@@ -72,7 +72,7 @@ function RouteComponent() {
             <section className="space-y-4">
               <button className="btn btn-primary btn-block">Login </button>
             </section>
-            <section className="ring fade rounded-box shadow mt-4">
+            <section className="ring fade rounded-sleek shadow mt-4">
               <h2 className="border-b fade p-2 font-bold text-current/80">
                 Credientials
               </h2>

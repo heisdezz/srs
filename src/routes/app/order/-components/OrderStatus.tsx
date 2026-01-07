@@ -3,7 +3,7 @@ const status_list = ["pending", "processing", "in transit", "delivered"];
 export default function OrderStatus({ status }: { status: string }) {
   status = "processing";
   return (
-    <div className="min-h-28 ring rounded-box fade bg-base-200 ">
+    <div className="min-h-28 ring rounded-sleek fade bg-base-200 ">
       <div className="p-4 border-b fade "> Order Status:</div>
       <div className="p-4">
         <ul className="steps w-full">

@@ -11,7 +11,7 @@ export default function AdminDashStats() {
   });
 
   return (
-    <div className="p-6  ring fade rounded-box  shadow bg-base-200/50  ">
+    <div className="p-6  ring fade rounded-sleek  shadow bg-base-200/50  ">
       <div className="mb-4">
         <h2 className="text-lg font-bold opacity-70 uppercase tracking-wider">
           Order Overview

@@ -23,7 +23,7 @@ export default function AuthButtonHeader() {
           <button className="btn btn-circle  btn-ghost">
             <User />
           </button>
-          <ul className="menu dropdown-content m-2 ring bg-base-100 rounded-box fade shadow">
+          <ul className="menu dropdown-content m-2 ring bg-base-100 rounded-sleek fade shadow">
             <li>
               <Link to="/app/profile">
                 <User className="size-4" />

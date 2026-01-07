@@ -9,7 +9,7 @@ export default function FormWrapper(props: FormWrapperProps) {
   const { title = "Title" } = props;
   return (
     <div
-      className={`space-y-2 p-4 py-6 ring rounded-box ring-current/10 shadow-md ${props.className}`}
+      className={`space-y-2 p-4 py-6 ring rounded-sleek ring-current/10 shadow-md ${props.className}`}
     >
       <h2 className="fieldset-label divider divider-start text-lg mb-4 font-bold opacity-80">
         {title}

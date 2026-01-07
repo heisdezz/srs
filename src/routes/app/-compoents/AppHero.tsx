@@ -27,7 +27,7 @@ export default function AppHero() {
               </Link>
             </div>
             {/*// collections*/}
-            <div className="p-6 **:m-0 ring rounded-box fade flex gap-4 !mt-8 flex-col md:flex-row">
+            <div className="p-6 **:m-0 ring rounded-sleek fade flex gap-4 !mt-8 flex-col md:flex-row">
               <div className="self-center md:self-start flex gap-2 md:gap-0 items-center md:flex-col md:items-start">
                 <h2 className="text-5xl md:text-2xl font-bold">500+</h2>
                 <p>Styles</p>

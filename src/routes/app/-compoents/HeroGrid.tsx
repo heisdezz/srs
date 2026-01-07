@@ -20,10 +20,10 @@ export default function HeroGrid() {
       query={query}
       customLoading={
         <div className="flex-1 grid md:grid-cols-2 gap-4">
-          <div className=" ring fade skeleton flex rounded-box"></div>
-          <div className="flex flex-col gap-4 rounded-box">
-            <div className=" ring fade skeleton flex-1 rounded-box"></div>
-            <div className=" ring fade skeleton flex-1 rounded-box"></div>
+          <div className=" ring fade skeleton flex rounded-sleek"></div>
+          <div className="flex flex-col gap-4 rounded-sleek">
+            <div className=" ring fade skeleton flex-1 rounded-sleek"></div>
+            <div className=" ring fade skeleton flex-1 rounded-sleek"></div>
           </div>
         </div>
       }
@@ -33,10 +33,10 @@ export default function HeroGrid() {
         return (
           <>
             <div className="flex-1  grid md:grid-cols-2 gap-4">
-              <div className="bg-primary flex rounded-box">
+              <div className="bg-primary flex rounded-sleek">
                 <ImageCard item={items[0]} />
               </div>
-              <div className="flex flex-col gap-4 rounded-box">
+              <div className="flex flex-col gap-4 rounded-sleek">
                 <ImageCard item={items[1]} />
                 <ImageCard item={items[2]} />
               </div>
@@ -56,14 +56,14 @@ const ImageCard = ({
   return (
     <Link
       to={`/app/product/${item.expand["product_id"].id}`}
-      className="flex-1 rounded-box isolate object-cover overflow-hidden relative flex group"
+      className="flex-1 rounded-sleek isolate object-cover overflow-hidden relative flex group"
     >
       <img
         src={get_image(item, item.banner_img)}
-        className="flex-1 object-cover rounded-box transition-transform duration-300 group-hover:scale-110"
+        className="flex-1 object-cover rounded-sleek transition-transform duration-300 group-hover:scale-110"
         alt=""
       />
-      <div className="m-1 absolute bottom-0 ring fade p-4 z-10 bg-base-100/80 backdrop-blur-md left-0 right-0 rounded-box flex">
+      <div className="m-1 absolute bottom-0 ring fade p-4 z-10 bg-base-100/80 backdrop-blur-md left-0 right-0 rounded-sleek flex">
         <div className="flex-1">
           <h2 className="text-sm font-bold line-clamp-1">{item.title}</h2>
           <p className="line-clamp-1 text-xs">

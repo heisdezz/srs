@@ -7,7 +7,7 @@ export default function OrderTracking() {
   ];
 
   return (
-    <div className="shadow-lg ring fade bg-base-100 rounded-box ">
+    <div className="shadow-lg ring fade bg-base-100 rounded-sleek ">
       <h2 className="p-4 border-b fade text-xl font-semibold">
         Order Tracking
       </h2>

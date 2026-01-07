@@ -122,7 +122,7 @@ export default function Checkout() {
   };
 
   return (
-    <div className="bg-base-100 shadow-lg rounded-3xl overflow-hidden fade ring">
+    <div className="bg-base-100 shadow-lg rounded-sleek overflow-hidden fade ring">
       <div className="p-6 space-y-6">
         <header>
           <h2 className="text-2xl font-medium tracking-tight text-base-content">

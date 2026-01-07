@@ -37,7 +37,7 @@ export default function DeliverySettings() {
   });
 
   return (
-    <div className="ring  fade rounded-box">
+    <div className="ring  fade rounded-sleek">
       <div className="p-4 border-b font-bold text-current/80 fade flex">
         Delivery Settings
         {query.isFetching && (
@@ -110,7 +110,7 @@ const DeliveryForm = ({
         <SimpleInput {...form.register("zip")} label="Zip" />
       </FormProvider>
 
-      <div className="text-sm p-2 ring fade rounded-box ">
+      <div className="text-sm p-2 ring fade rounded-sleek ">
         {props.full_address}
       </div>
       <div className="space-y-4">

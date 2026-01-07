@@ -25,10 +25,10 @@ export default function OrderCard({
   const product_info = item["expand"].productId as ProductsResponse;
   return (
     <Link to={`/app/order/${item.id}`}>
-      <div className="h-full ring fade rounded-box flex flex-col md:flex-row gap-4 p-2">
+      <div className="h-full ring fade rounded-sleek flex flex-col md:flex-row gap-4 p-2">
         <div className="flex flex-1 md:items-center md:w-fit w-full  gap-2">
           <img
-            className="md:aspect-square size-26 object-contain bg-base-200 rounded-box"
+            className="md:aspect-square size-26 object-contain bg-base-200 rounded-sleek"
             src={img_url}
             alt=""
           />

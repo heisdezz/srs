@@ -97,7 +97,7 @@ export default function ProductDetails({
           NGN {(computed_price * quantity).toLocaleString()}
         </p>
       </div>
-      <div className=" bg-base-100 ring fade rounded-md shadow">
+      <div className=" bg-base-100 ring fade rounded-sleek shadow">
         <h2 className="p-4 border-b font-bold text-current/80 fade">Options</h2>
         {/*<div className="bg-[beige] p-4">s</div>*/}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4">

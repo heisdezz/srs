@@ -20,7 +20,7 @@ export default function OrderDrawerContent() {
         Order Status
       </h2>
       {/*{search["status"]}*/}
-      <div className="p-4 fade shadow rounded-box ring">
+      <div className="p-4 fade shadow rounded-sleek ring">
         <ul className="menu p-0 size-full space-y-2">
           <li>
             <a

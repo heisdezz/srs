@@ -43,7 +43,7 @@ function RouteComponent() {
               <div className="mx-auto max-w-2xl mb-6">
                 <OrderStatus status={data.status} />
               </div>
-              <div className="ring mx-auto max-w-2xl p-4 rounded-box fade">
+              <div className="ring mx-auto max-w-2xl p-4 rounded-sleek fade">
                 <SimpleCarousel>
                   {data.expand["productId"].images.map((item) => {
                     return (
@@ -61,7 +61,7 @@ function RouteComponent() {
                 <div>
                   <h2 className="text-2xl font-bold mt-4">{product.name}</h2>
                   <p className="text-lg text-gray-700">{product.description}</p>
-                  <div className="flex flex-col gap-2 my-4 ring p-4 fade rounded-box">
+                  <div className="flex flex-col gap-2 my-4 ring p-4 fade rounded-sleek">
                     <p className="text-md font-semibold">
                       Price: N {data.price.toLocaleString()}
                     </p>
@@ -82,7 +82,7 @@ function RouteComponent() {
                   {product.options && (
                     <div className="mt-4">
                       <h3 className="text-lg font-semibold mb-2">Options:</h3>
-                      <ul className="list-disc list-inside bg-gray-100 p-4 rounded-box ring fade text-sm space-y-4">
+                      <ul className="list-disc list-inside bg-gray-100 p-4 rounded-sleek ring fade text-sm space-y-4">
                         {Object.entries(product.options).map(
                           ([key, option]) => (
                             <li key={key}>

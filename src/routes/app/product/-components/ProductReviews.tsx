@@ -94,7 +94,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
         </FormProvider>
       </Modal>
 
-      <div className="bg-base-100 rounded-box border border-base-300 overflow-hidden">
+      <div className="bg-base-100 rounded-sleek border border-base-300 overflow-hidden">
         <div className="p-6 border-b border-base-300 flex items-center justify-between bg-base-200/30">
           <div>
             <h2 className="text-xl font-bold">Ratings & Reviews</h2>
@@ -196,7 +196,7 @@ const RatingDistribution = ({ id }: { id: string }) => {
 
         return (
           <div className="flex flex-col md:flex-row sm:items-center gap-4  py-4">
-            <div className="text-center ring p-6 rounded-box fade flex-1 md:max-w-3xs">
+            <div className="text-center ring p-6 rounded-sleek fade flex-1 md:max-w-3xs">
               <div className="text-5xl font-black text-primary mb-1">
                 {Number(data.average_rating || 0).toFixed(1)}
               </div>
@@ -218,7 +218,7 @@ const RatingDistribution = ({ id }: { id: string }) => {
               </div>
             </div>
 
-            <div className="space-y-2 flex-1 ring p-4 fade rounded-box ">
+            <div className="space-y-2 flex-1 ring p-4 fade rounded-sleek ">
               {distribution.map(({ rating, count }) => {
                 const percentage = total > 0 ? (count / total) * 100 : 0;
                 return (

@@ -14,7 +14,7 @@ export default function ProfileSettings() {
   //
   if (!user) {
     return (
-      <div className="ring p-4 rounded-box fade grid place-items-center">
+      <div className="ring p-4 rounded-sleek fade grid place-items-center">
         <div className="">
           <h2 className="text-xl font-bold text-current/70">
             <Link to="/auth/login">Login To Continue</Link>
@@ -24,7 +24,7 @@ export default function ProfileSettings() {
     );
   }
   return (
-    <div className="ring  rounded-box fade">
+    <div className="ring  rounded-sleek fade">
       <div className="p-4 fade border-b font-bold text-current/80">
         UserInfo
       </div>

@@ -3,7 +3,6 @@ import SimpleInput from "@/components/inputs/SimpleInput";
 import CompLoader from "@/components/layouts/ComponentLoader";
 import { useFiltersStore } from "@/store/client";
 import { useQuery } from "@tanstack/react-query";
-import { Library } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 interface DrawerFormProps {
@@ -41,7 +40,7 @@ export default function DrawerContent() {
         <div>
           <h2 className="px-2 py-2 font-semibold">Price</h2>
 
-          <div className="ring p-4 fade rounded-box space-y-2">
+          <div className="ring p-4 fade rounded-sleek space-y-2">
             <SimpleInput
               {...form.register("min")}
               type="number"
@@ -56,13 +55,13 @@ export default function DrawerContent() {
             />
           </div>
         </div>
-        <CompLoader query={query} minHeight={100}>
+        <CompLoader query={query}>
           {(data) => {
             const payload = data;
             return (
               <div className="">
                 <h2 className="px-2 py-2 font-semibold">Categories</h2>
-                <ul className="menu w-full ring fade rounded-box">
+                <ul className="menu w-full ring fade rounded-sleek">
                   <li
                     onClick={() => {
                       form.setValue("category", "");
