@@ -210,6 +210,7 @@ export type ShippingInfoRecord = {
 	created: IsoAutoDateString
 	id: string
 	orderId?: RecordIdString
+	trackingNumber?: number
 	updated: IsoAutoDateString
 }
 
