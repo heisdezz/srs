@@ -3,6 +3,7 @@ import Card from "@/components/Card";
 import PageHeader from "@/components/Headers/PageHeader";
 import CardContainer from "@/components/layouts/CardContainer";
 import PageLoader from "@/components/layouts/PageLoader";
+import Paginator, { usePagination } from "@/components/pagination/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -11,9 +12,10 @@ export const Route = createFileRoute("/admin/products/")({
 });
 
 function RouteComponent() {
+  const props = usePagination();
   const query = useQuery({
     queryKey: ["product_list", "admin"],
-    queryFn: () => pb.collection("products").getList(1, 20),
+    queryFn: () => pb.collection("products").getList(props.currentPage, 20),
   });
   return (
     <>
@@ -23,11 +25,14 @@ function RouteComponent() {
           {(data) => {
             const items = data.items;
             return (
-              <CardContainer>
-                {items.map((item) => (
-                  <Card key={item.id} item={item}></Card>
-                ))}
-              </CardContainer>
+              <>
+                <CardContainer>
+                  {items.map((item) => (
+                    <Card admin key={item.id} item={item}></Card>
+                  ))}
+                </CardContainer>
+                <Paginator totalPages={data.totalPages} />
+              </>
             );
           }}
         </PageLoader>

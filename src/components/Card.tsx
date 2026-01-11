@@ -3,9 +3,12 @@ import { Star } from "lucide-react";
 import type { ProductsResponse } from "pocketbase-types"; // Updated import path to ProductsResponse
 import { get_image } from "@/helpers/client"; // Import get_image helper
 
-export default function Card(props: { item: ProductsResponse }) {
+export default function Card(props: {
+  item: ProductsResponse;
+  admin?: boolean;
+}) {
   // Use ProductsResponse for item prop
-  const { item } = props;
+  const { item, admin = false } = props;
   const price = item.price || 0; // Use item.price from the ProductsRecord
   const discountPrice = item.discountPrice || price; // Use item.discountPrice, or price if not set
 
@@ -17,7 +20,7 @@ export default function Card(props: { item: ProductsResponse }) {
 
   return (
     <Link
-      to={`/app/product/${item.id}`}
+      to={`/${admin ? "admin" : "app"}/product/${item.id}`}
       className="group flex flex-col bg-base-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 border border-base-content/10"
     >
       {/* Image Container (M3 Card Media) */}
