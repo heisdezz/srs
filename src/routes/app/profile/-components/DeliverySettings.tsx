@@ -3,9 +3,8 @@ import SimpleInput from "@/components/inputs/SimpleInput";
 import CompLoader from "@/components/layouts/ComponentLoader";
 import { useUser, validateItems } from "@/helpers/client";
 import { validate_addr } from "@/store/client";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { DeliverySettingsResponse } from "pocketbase-types";
-import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -63,6 +62,7 @@ const DeliveryForm = ({
   initial: Partial<DeliverySettingsResponse>;
 }) => {
   const { user } = useUser();
+  const queryClient = useQueryClient();
   const form = useForm({
     values: {
       ...initial,
@@ -70,7 +70,7 @@ const DeliveryForm = ({
   });
   const mutation = useMutation({
     mutationFn: async (data: any) => {
-      await pb
+      return await pb
         .collection("deliverySettings")
         .update(user.id, { ...data, user_id: user.id, id: user.id })
         .catch(async (err) => {
@@ -81,6 +81,10 @@ const DeliveryForm = ({
           }
           throw err;
         });
+    },
+    onSuccess: (newData) => {
+      queryClient.invalidateQueries({ queryKey: ["delvierySettings"] });
+      form.reset(newData);
     },
   });
 

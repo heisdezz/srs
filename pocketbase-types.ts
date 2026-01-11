@@ -20,6 +20,7 @@ export enum Collections {
 	Products = "products",
 	ReviewCount = "review_count",
 	Reviews = "reviews",
+	ShippingInfo = "shippingInfo",
 	Users = "users",
 }
 
@@ -154,6 +155,7 @@ export type DeliverySettingsRecord = {
 export type OrdersRecord<TproductOptions = unknown> = {
 	created: IsoAutoDateString
 	deliveryFee?: number
+	deliverySettings?: RecordIdString
 	id: string
 	price?: number
 	productId?: RecordIdString
@@ -201,11 +203,21 @@ export type ReviewsRecord = {
 	user_id?: RecordIdString
 }
 
+export type ShippingInfoRecord = {
+	Name?: string
+	Phone?: number
+	ShippingProvider?: string
+	created: IsoAutoDateString
+	id: string
+	orderId?: RecordIdString
+	updated: IsoAutoDateString
+}
+
 export type UsersRecord = {
 	avatar?: FileNameString
 	created: IsoAutoDateString
 	email: string
-	emailVisibility?: boolean
+	emailVisibility: boolean
 	fullName?: string
 	id: string
 	password: string
@@ -229,6 +241,7 @@ export type OrdersResponse<TproductOptions = unknown, Texpand = unknown> = Requi
 export type ProductsResponse<Toptions = unknown, Texpand = unknown> = Required<ProductsRecord<Toptions>> & BaseSystemFields<Texpand>
 export type ReviewCountResponse<Taverage_rating = unknown, Texpand = unknown> = Required<ReviewCountRecord<Taverage_rating>> & BaseSystemFields<Texpand>
 export type ReviewsResponse<Texpand = unknown> = Required<ReviewsRecord> & BaseSystemFields<Texpand>
+export type ShippingInfoResponse<Texpand = unknown> = Required<ShippingInfoRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -248,6 +261,7 @@ export type CollectionRecords = {
 	products: ProductsRecord
 	review_count: ReviewCountRecord
 	reviews: ReviewsRecord
+	shippingInfo: ShippingInfoRecord
 	users: UsersRecord
 }
 
@@ -266,6 +280,7 @@ export type CollectionResponses = {
 	products: ProductsResponse
 	review_count: ReviewCountResponse
 	reviews: ReviewsResponse
+	shippingInfo: ShippingInfoResponse
 	users: UsersResponse
 }
 
