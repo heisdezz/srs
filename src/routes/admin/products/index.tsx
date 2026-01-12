@@ -5,7 +5,7 @@ import CardContainer from "@/components/layouts/CardContainer";
 import PageLoader from "@/components/layouts/PageLoader";
 import Paginator, { usePagination } from "@/components/pagination/Pagination";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/admin/products/")({
   component: RouteComponent,
@@ -19,7 +19,11 @@ function RouteComponent() {
   });
   return (
     <>
-      <PageHeader title="Product List" />
+      <PageHeader title="Product List">
+        <Link to="/admin/product/new" className="btn btn-primary">
+          New Product
+        </Link>
+      </PageHeader>
       <div>
         <PageLoader query={query}>
           {(data) => {
