@@ -12,14 +12,19 @@ import type { OptionsConfig, Option, OptionValue } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { pb } from "@/api/apiClient";
 import { toast } from "sonner";
+import SimpleSelect from "@/components/inputs/SimpleSelect";
 
 // Define a type for an option with a key, to be used in an array for useFieldArray
 type OptionWithKey = Option & { key: string };
 
 export default function AdminProductDetails({
   item,
+  add = false,
+  addFn,
 }: {
   item: ProductsResponse;
+  add?: boolean;
+  addFn?: (data: ProductsRecord<OptionsConfig>) => void;
 }) {
   // Ensure item.options is treated as OptionsConfig or an empty object if null
   const defaultOptions = (item.options || {}) as OptionsConfig;
@@ -87,6 +92,9 @@ export default function AdminProductDetails({
       id: item.id, // Ensure the ID is included for the update mutation
     };
     console.log("Updated Product Data:", productDataToSend);
+    if (add) {
+      return addFn(productDataToSend);
+    }
     mutation.mutate(productDataToSend);
   };
 
@@ -101,11 +109,17 @@ export default function AdminProductDetails({
             icon={<Tag size={18} className="opacity-70" />}
           />
 
-          <LocalSelect {...register("category")} label="Category">
-            <option value="">Select a category</option>
-            {/* Options would typically be mapped here from a list of categories */}
-            <option value={item.category}>{item.category}</option>
-          </LocalSelect>
+          <SimpleSelect
+            route="categories"
+            value={watch("category")} // Use watch to get the current value
+            onChange={(newValue) => setValue("category", newValue as string)} // Update the form value
+            label="Category"
+            render={(category, index) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            )}
+          />
 
           <SimpleInput
             {...register("price", { valueAsNumber: true })}
