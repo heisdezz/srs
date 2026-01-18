@@ -62,7 +62,11 @@ function RouteComponent() {
                   <h2 className="card-title text-sm uppercase tracking-wider opacity-60">
                     Status
                   </h2>
-                  <OrderStatus status={data.status} />
+                  <OrderStatus
+                    id={data.id}
+                    deliveryCode={data.deliveryCode}
+                    status={data.status}
+                  />
                 </div>
               </div>
 

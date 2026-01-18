@@ -154,6 +154,7 @@ export type DeliverySettingsRecord = {
 
 export type OrdersRecord<TproductOptions = unknown> = {
 	created: IsoAutoDateString
+	deliveryCode: string
 	deliveryFee?: number
 	deliverySettings?: RecordIdString
 	id: string

@@ -1,10 +1,23 @@
 import PageFooter from "@/components/PageFooter";
 import PageHeader from "@/components/PageHeader";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import AppDrawer from "./-compoents/AppDrawer";
+import { useUser } from "@/helpers/client";
 
 export const Route = createFileRoute("/app")({
   component: RouteComponent,
+  loader: () => {
+    const { user } = useUser();
+
+    if (user && user.collectionName == "admins") {
+      return redirect({
+        to: "/admin",
+        replace: true,
+      });
+    }
+
+    return null;
+  },
 });
 
 function RouteComponent() {
