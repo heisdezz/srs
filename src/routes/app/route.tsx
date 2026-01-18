@@ -9,12 +9,12 @@ export const Route = createFileRoute("/app")({
   loader: () => {
     const { user } = useUser();
 
-    if (user && user.collectionName == "admins") {
-      return redirect({
-        to: "/admin",
-        replace: true,
-      });
-    }
+    // if (user && user.collectionName == "admins") {
+    //   return redirect({
+    //     to: "/admin",
+    //     replace: true,
+    //   });
+    // }
 
     return null;
   },
