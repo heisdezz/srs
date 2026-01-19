@@ -20,7 +20,7 @@ export default function AppHero() {
                 Explore Store
               </Link>
               <Link
-                to="/app/faq"
+                to="/app/faqs"
                 className="btn btn-neutral flex-1 btn-outline"
               >
                 More Info
