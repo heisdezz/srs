@@ -2,80 +2,91 @@ import { pb } from "@/api/apiClient";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState, type PropsWithChildren } from "react";
 import type { RecordModel } from "pocketbase";
+import { useFormContext } from "react-hook-form";
 
-interface SimpleSelect<T extends RecordModel> extends PropsWithChildren {
+interface SimpleSelectProps<T extends RecordModel> extends PropsWithChildren {
   route: string;
-  value: string | null; // Changed to allow null for "All" option
-  onChange: (value: string | null) => void; // Changed to allow null
+  value?: string | null;
+  onChange?: (value: string | null) => void;
   label?: string;
-  render: (item: T, index: number) => React.ReactNode; // Changed return type to React.ReactNode
+  name?: string;
+  render: (item: T, index: number) => React.ReactNode;
 }
 
 export default function SimpleSelect<T extends RecordModel>(
-  props: SimpleSelect<T>,
+  props: SimpleSelectProps<T>,
 ) {
+  const { route, value, onChange, label, name, render } = props;
+
+  // ✅ SAFE: prevents crash when no FormProvider exists
+  let formState: any = null;
+  try {
+    formState = useFormContext()?.formState;
+  } catch {
+    formState = null;
+  }
+
+  const error = name && formState ? formState.errors?.[name] : undefined;
+
   const [internalValue, setInternalValue] = useState<string | null>(
-    props.value,
-  ); // Initialize with props.value
+    value ?? null,
+  );
+
   const query = useQuery<T[]>({
-    // Specify the type for query data
-    queryKey: ["select", props.route],
-    queryFn: () => pb.collection(props.route).getFullList<T>(), // Specify the type for getFullList
+    queryKey: ["select", route],
+    queryFn: () => pb.collection(route).getFullList<T>(),
   });
 
   useEffect(() => {
-    // Sync internalValue with props.value if props.value changes externally
-    if (props.value !== internalValue) {
-      setInternalValue(props.value);
+    if (value !== undefined && value !== internalValue) {
+      setInternalValue(value);
     }
-  }, [props.value]);
+  }, [value]);
 
   useEffect(() => {
-    // Call onChange only when internalValue changes and is different from props.value
-    if (internalValue !== props.value && props.onChange) {
-      props.onChange(internalValue);
+    if (internalValue !== value && onChange) {
+      onChange(internalValue);
     }
-  }, [internalValue, props.onChange, props.value]);
+  }, [internalValue, onChange, value]);
 
-  const label = props.label;
   if (query.isLoading)
     return (
       <div className="w-full">
         {label && (
           <label
-            htmlFor={`select-${props.route}`}
-            className="mb-2 fieldset-label"
+            htmlFor={`select-${route}`}
+            className="mb-2 fieldset-label font-semibold"
           >
-            {label}
+            <span className="text-sm">{label}</span>
           </label>
         )}
         <select
           disabled
-          name={`select-${props.route}`}
-          className="select w-full"
-          id={`select-${props.route}`}
+          name={name || `select-${route}`}
+          className="select select-md w-full select-bordered"
+          id={`select-${route}`}
         >
-          <option value="">Loading</option>
+          <option value="">Loading...</option>
         </select>
       </div>
     );
 
   if (query.isError)
     return (
-      <div className="w-full ">
+      <div className="w-full">
         {label && (
           <label
-            htmlFor={`select-${props.route}`}
-            className="mb-2 fieldset-label"
+            htmlFor={`select-${route}`}
+            className="mb-2 fieldset-label font-semibold"
           >
-            {label}
+            <span className="text-sm">{label}</span>
           </label>
         )}
         <select
           disabled
-          name={`select-${props.route}`}
-          className="select w-full"
-          id={`select-${props.route}`}
+          name={name || `select-${route}`}
+          className="select select-md w-full select-bordered border-error"
+          id={`select-${route}`}
         >
           <option value="">Error loading options</option>
         </select>
@@ -85,28 +96,28 @@ export default function SimpleSelect<T extends RecordModel>(
   const items: T[] = query.data ?? [];
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-2">
       {label && (
-        <label
-          htmlFor={`select-${props.route}`}
-          className="mb-2 fieldset-label"
-        >
-          {label}
-        </label>
+        <div className="fieldset-label font-semibold">
+          <span className="text-sm">{label}</span>
+        </div>
       )}
       <select
-        value={internalValue === null ? "null" : internalValue} // Handle null for "All" option
+        value={internalValue === null ? "null" : internalValue}
         onChange={(e) => {
           const newValue = e.target.value === "null" ? null : e.target.value;
           setInternalValue(newValue);
         }}
-        className="select w-full"
-        id={`select-${props.route}`}
-        name={`select-${props.route}`}
+        className={`select select-md w-full select-bordered ${error ? "select-error" : ""}`}
+        id={`select-${route}`}
+        name={name || `select-${route}`}
       >
-        <option value="null">All</option> {/* Moved "All" option to the top */}
-        {items.map((item, idx) => props.render(item, idx))}
+        <option value="null">All</option>
+        {items.map((item, idx) => render(item, idx))}
       </select>
+      {error && (
+        <p className="text-error text-sm mt-1">{error.message as string}</p>
+      )}
     </div>
   );
 }

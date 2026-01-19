@@ -1,7 +1,7 @@
 import { pb } from "@/api/apiClient";
 import PageLoader from "@/components/layouts/PageLoader";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import AdminProductInfo from "./-components/AdminProductInfo";
 import AdminProductDetails from "./-components/AdminProductDetails";
 import UpdateImages from "@/components/inputs/UpdateImages";
@@ -9,6 +9,9 @@ import { useImages } from "@/helpers/images";
 import { toast } from "sonner";
 import { extract_message } from "@/helpers/api";
 import type { ProductsRecord } from "pocketbase-types";
+import PageHeader from "@/components/Headers/PageHeader";
+import Modal from "@/components/modals/DialogModal";
+import { useModal } from "@/helpers/modals";
 
 export const Route = createFileRoute("/admin/product/$id")({
   component: RouteComponent,
@@ -80,9 +83,28 @@ function RouteComponent() {
     });
   };
 
+  const { ref, showModal, closeModal } = useModal();
   return (
     <div className="container mx-auto py-8">
-      <h2 className="text-3xl font-bold mb-6">Product: #{id}</h2>
+      <Modal ref={ref} title="Preview ">
+        <iframe
+          className="w-full min-h-120"
+          src={`/app/product/${id}`}
+        ></iframe>
+      </Modal>
+      <PageHeader
+        title={"Edit Product" + <span>{id}</span>}
+        description="Update product details and images"
+      >
+        <>
+          <button className="btn btn-primary" onClick={showModal}>
+            Preview
+          </button>
+        </>
+        {/*<Link className="btn btn-primary" to={`/app/product/${id}`}>
+          Preview
+        </Link>*/}
+      </PageHeader>
       <PageLoader query={query}>
         {(data) => {
           return (
@@ -98,7 +120,7 @@ function RouteComponent() {
                 {/*<AdminProductInfo item={data} />*/}
               </div>
               <div className="flex-1">
-                <AdminProductDetails item={data} addFn={submit} />
+                <AdminProductDetails item={data} addFn={submit as any} />
               </div>
             </div>
           );
