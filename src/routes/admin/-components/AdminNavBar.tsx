@@ -38,16 +38,10 @@ export default function AdminNavBar() {
             </button>
             <ul
               tabIndex={0}
-              className="mt-3  p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-sleek w-52"
+              className="mt-3  p-2 shadow menu  dropdown-content bg-base-100 rounded-sleek w-52"
             >
               <li>
-                <a>Profile</a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
+                <a href="/auth/logout"> Logout</a>
               </li>
             </ul>
           </div>
