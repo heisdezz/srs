@@ -93,7 +93,7 @@ function RouteComponent() {
         ></iframe>
       </Modal>
       <PageHeader
-        title={"Edit Product" + <span>{id}</span>}
+        title={`Edit Product: ${id}`}
         description="Update product details and images"
       >
         <>

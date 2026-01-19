@@ -87,7 +87,7 @@ export default function CategoryCard({
         title="Edit Category"
         actions={
           <div className="flex gap-2">
-            <button className="btn btn-ghost" onClick={editModal.close}>
+            <button className="btn btn-ghost" onClick={editModal.closeModal}>
               Cancel
             </button>
             <button
