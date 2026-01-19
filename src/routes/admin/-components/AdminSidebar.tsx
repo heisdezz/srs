@@ -14,6 +14,10 @@ const links = [
     path: "/admin/orders",
     label: "Orders",
   },
+  {
+    path: "/admin/categories",
+    label: "Categories",
+  },
 ];
 
 const profile_links = [
