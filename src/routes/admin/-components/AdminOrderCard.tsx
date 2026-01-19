@@ -6,15 +6,15 @@ import type { OptionsConfig } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import type { OrdersResponse, ProductsRecord } from "pocketbase-types";
+import type { OrdersResponse, ProductsResponse } from "pocketbase-types";
 
 export default function AdminOrderCard({
   order,
 }: {
-  order: OrdersResponse<OptionsConfig, ProductsRecord>;
+  order: OrdersResponse<OptionsConfig, { productId: ProductsResponse }>;
 }) {
   const [showAddress, setShowAddress] = useState(false);
-  const product = order.expand?.["productId"] as ProductsRecord;
+  const product = order.expand?.productId;
   const date = new Date(order.created).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -25,12 +25,12 @@ export default function AdminOrderCard({
     minute: "2-digit",
   });
   const productOptions = order["productOptions"] as OptionsConfig;
-  const keys = Object.keys(productOptions);
+  const keys = productOptions ? Object.keys(productOptions) : [];
 
   return (
     <div
       key={order.id}
-      className="group relative bg-base-100 border border-base-300 rounded-[28px] overflow-hidden transition-shadow duration-200 hover:shadow-md"
+      className="group relative bg-base-200 ring ring-primary/30  border border-base-300 rounded-[28px] overflow-hidden transition-shadow duration-200 hover:shadow-md h-[520px]"
     >
       <div className="p-4 md:p-6 flex flex-col h-full">
         {/* Material Header */}
@@ -45,7 +45,7 @@ export default function AdminOrderCard({
                 {time}
               </span>
             </div>
-            <h2 className="text-xl font-medium text-base-content tracking-tight">
+            <h2 className="text-xl font-medium text-base-content tracking-tight line-clamp-1">
               {product?.name || "Product"}
             </h2>
           </div>
@@ -72,21 +72,23 @@ export default function AdminOrderCard({
         </div>
 
         {/* Chips for Options */}
-        {keys.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6">
-            {keys.map((item) => (
-              <div
-                key={item}
-                className="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-[11px] font-medium flex gap-1.5 items-center"
-              >
-                <span className="text-secondary/70">{item}:</span>
-                <span className="text-secondary font-bold">
-                  {productOptions[item].values[0].label}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="h-12 overflow-hidden mb-4">
+          {keys.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {keys.map((item) => (
+                <div
+                  key={item}
+                  className="px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-[11px] font-medium flex gap-1.5 items-center"
+                >
+                  <span className="text-secondary/70">{item}:</span>
+                  <span className="text-secondary font-bold">
+                    {productOptions[item].values[0].label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Pricing Section - Material Surface */}
         <div className="bg-base-200/40 rounded-2xl p-4 mb-6">
@@ -97,7 +99,10 @@ export default function AdminOrderCard({
               </span>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-bold tracking-tight text-base-content">
-                  ₦{(order.price + order.deliveryFee).toLocaleString()}
+                  ₦
+                  {(
+                    (order.price || 0) + (order.deliveryFee || 0)
+                  ).toLocaleString()}
                 </span>
                 <span className="text-xs font-bold text-base-content/40">
                   NGN
@@ -114,7 +119,7 @@ export default function AdminOrderCard({
         <div className="mb-4">
           {showAddress ? (
             <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-              <ShippingAddress user_id={order.userId} />
+              <ShippingAddress user_id={order.userId || ""} />
             </div>
           ) : (
             <button
@@ -176,7 +181,7 @@ export const ShippingAddress = ({ user_id }: { user_id: string }) => {
           <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
           <circle cx="12" cy="10" r="3" />
         </svg>
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.1em] text-base-content/60">
+        <h2 className="text-[10px] font-bold uppercase tracking-widest text-base-content/60">
           Delivery Destination
         </h2>
       </div>
@@ -208,7 +213,7 @@ export const ShippingAddress = ({ user_id }: { user_id: string }) => {
           {(data) => {
             const { full_address } = validate_addr(data);
             return (
-              <p className="text-sm leading-relaxed text-base-content/70 font-medium italic">
+              <p className="text-sm leading-relaxed text-base-content/70 font-medium italic line-clamp-2">
                 {full_address || "No address provided"}
               </p>
             );
