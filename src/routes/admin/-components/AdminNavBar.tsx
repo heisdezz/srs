@@ -9,14 +9,14 @@ export default function AdminNavBar() {
         </div>
 
         <div className="flex-none gap-2 flex items-center">
-          <div className="dropdown dropdown-end">
+          {/*<div className="dropdown dropdown-end">
             <button className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <Bell size={20} />
                 <span className="badge badge-xs badge-error indicator-item"></span>
               </div>
             </button>
-          </div>
+          </div>*/}
           <div className="dropdown dropdown-end ">
             <button
               tabIndex={0}
