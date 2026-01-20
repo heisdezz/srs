@@ -16,6 +16,7 @@ export default function OrderStatus({
 }) {
   const queryClient = useQueryClient();
   const currentStatusIndex = status_list.indexOf(status.toLowerCase());
+  const isNotInTransit = status.toLowerCase() !== "in transit";
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -93,7 +94,7 @@ export default function OrderStatus({
           )}
           <button
             onClick={handleMarkAsDelivered}
-            disabled={mutation.isPending}
+            disabled={mutation.isPending || isNotInTransit}
             className="btn btn-primary btn-sm md:btn-md ml-auto"
           >
             {mutation.isPending && (
