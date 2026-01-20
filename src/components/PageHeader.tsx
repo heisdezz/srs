@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, ShoppingCart } from "lucide-react";
 import AuthButtonHeader from "./AuthButtonHeader";
 import HeaderLinks from "./HeaderLinks";
+import ThemeButton from "./ThemeButton";
 
 export default function PageHeader() {
   return (
@@ -13,10 +14,13 @@ export default function PageHeader() {
         </Link>
 
         <HeaderLinks />
-        <div className="ml-auto md:ml-0 space-x-2 hidden md:block">
+        <div className="ml-auto md:ml-0 space-x-2 hidden md:flex  items-center">
+          <ThemeButton />
           <AuthButtonHeader />
         </div>
         <div className="ml-auto  md:ml-0 md:hidden  space-x-2">
+          <ThemeButton />
+
           <Link to="/app/cart" className="btn btn-ghost btn-circle ">
             <ShoppingCart className="size-5" />
           </Link>
