@@ -9,6 +9,7 @@ import type { OptionsConfig } from "@/types";
 import OrderCard from "./-components/OrderCard";
 import EmptyList from "@/components/EmptyList";
 import { Filter } from "lucide-react";
+import Paginator, { usePagination } from "@/components/pagination/Pagination";
 
 interface OrderSearch {
   status: "pending" | "completed" | "cancelled" | "in transit" | "all";
@@ -31,14 +32,18 @@ function RouteComponent() {
   const search = useSearch({
     strict: false,
   });
+  const pageProps = usePagination();
+
   const status = search["status"];
   const query = useQuery({
-    queryKey: ["orders", status],
+    queryKey: ["orders", status, pageProps.currentPage],
     queryFn: async () => {
-      let resp = await pb.collection("orders").getList(1, 10, {
-        expand: "productId",
-        filter: status === "all" ? undefined : `status = '${status}'`,
-      });
+      let resp = await pb
+        .collection("orders")
+        .getList(pageProps.currentPage, 10, {
+          expand: "productId",
+          filter: status === "all" ? undefined : `status = '${status}'`,
+        });
       return resp;
     },
   });
@@ -70,6 +75,7 @@ function RouteComponent() {
                     );
                   })}
                 </ul>
+                <Paginator totalPages={data.totalPages} />
               </>
             );
           }}
