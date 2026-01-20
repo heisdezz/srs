@@ -8,6 +8,7 @@ import { convert_to_array, get_image } from "@/helpers/client";
 import type { OptionsConfig } from "@/types";
 import OrderCard from "./-components/OrderCard";
 import EmptyList from "@/components/EmptyList";
+import { Filter } from "lucide-react";
 
 interface OrderSearch {
   status: "pending" | "completed" | "cancelled" | "in transit" | "all";
@@ -44,9 +45,15 @@ function RouteComponent() {
   return (
     <PageContainer>
       <div>
-        <h2 className="text-xl font-bold border-b h-18 flex items-center fade">
-          Order Items
-        </h2>
+        <div className="flex items-center  border-b h-18 fade">
+          <h2 className="text-xl font-bold ">Order Items</h2>
+          <label
+            htmlFor="order-drawer"
+            className="btn btn-primary btn-sm btn-soft ring fade btn-square ml-auto"
+          >
+            <Filter className="size-4" />
+          </label>
+        </div>
         <PageLoader query={query}>
           {(data) => {
             return (
