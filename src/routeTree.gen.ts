@@ -178,15 +178,15 @@ export interface FileRoutesByFullPath {
   '/admin/product/$id': typeof AdminProductIdRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
   '/app/product/$id': typeof AppProductIdRoute
-  '/admin/categories': typeof AdminCategoriesIndexRoute
-  '/admin/orders': typeof AdminOrdersIndexRoute
-  '/admin/products': typeof AdminProductsIndexRoute
-  '/app/cart': typeof AppCartIndexRoute
-  '/app/faqs': typeof AppFaqsIndexRoute
+  '/admin/categories/': typeof AdminCategoriesIndexRoute
+  '/admin/orders/': typeof AdminOrdersIndexRoute
+  '/admin/products/': typeof AdminProductsIndexRoute
+  '/app/cart/': typeof AppCartIndexRoute
+  '/app/faqs/': typeof AppFaqsIndexRoute
   '/app/orders/': typeof AppOrdersIndexRoute
   '/app/products/': typeof AppProductsIndexRoute
-  '/app/profile': typeof AppProfileIndexRoute
-  '/admin/product/new': typeof AdminProductNewIndexRoute
+  '/app/profile/': typeof AppProfileIndexRoute
+  '/admin/product/new/': typeof AdminProductNewIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -258,15 +258,15 @@ export interface FileRouteTypes {
     | '/admin/product/$id'
     | '/app/order/$orderId'
     | '/app/product/$id'
-    | '/admin/categories'
-    | '/admin/orders'
-    | '/admin/products'
-    | '/app/cart'
-    | '/app/faqs'
+    | '/admin/categories/'
+    | '/admin/orders/'
+    | '/admin/products/'
+    | '/app/cart/'
+    | '/app/faqs/'
     | '/app/orders/'
     | '/app/products/'
-    | '/app/profile'
-    | '/admin/product/new'
+    | '/app/profile/'
+    | '/admin/product/new/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -415,7 +415,7 @@ declare module '@tanstack/react-router' {
     '/app/profile/': {
       id: '/app/profile/'
       path: '/profile'
-      fullPath: '/app/profile'
+      fullPath: '/app/profile/'
       preLoaderRoute: typeof AppProfileIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
@@ -436,35 +436,35 @@ declare module '@tanstack/react-router' {
     '/app/faqs/': {
       id: '/app/faqs/'
       path: '/faqs'
-      fullPath: '/app/faqs'
+      fullPath: '/app/faqs/'
       preLoaderRoute: typeof AppFaqsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/app/cart/': {
       id: '/app/cart/'
       path: '/cart'
-      fullPath: '/app/cart'
+      fullPath: '/app/cart/'
       preLoaderRoute: typeof AppCartIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/admin/products/': {
       id: '/admin/products/'
       path: '/products'
-      fullPath: '/admin/products'
+      fullPath: '/admin/products/'
       preLoaderRoute: typeof AdminProductsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/orders/': {
       id: '/admin/orders/'
       path: '/orders'
-      fullPath: '/admin/orders'
+      fullPath: '/admin/orders/'
       preLoaderRoute: typeof AdminOrdersIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/categories/': {
       id: '/admin/categories/'
       path: '/categories'
-      fullPath: '/admin/categories'
+      fullPath: '/admin/categories/'
       preLoaderRoute: typeof AdminCategoriesIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
@@ -499,7 +499,7 @@ declare module '@tanstack/react-router' {
     '/admin/product/new/': {
       id: '/admin/product/new/'
       path: '/product/new'
-      fullPath: '/admin/product/new'
+      fullPath: '/admin/product/new/'
       preLoaderRoute: typeof AdminProductNewIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }

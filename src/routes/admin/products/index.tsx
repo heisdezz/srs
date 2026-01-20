@@ -7,8 +7,6 @@ import SimpleSelect from "@/components/inputs/SimpleSelect";
 import CardContainer from "@/components/layouts/CardContainer";
 import PageLoader from "@/components/layouts/PageLoader";
 import Paginator, { usePagination } from "@/components/pagination/Pagination";
-import SearchBar from "@/components/SearchBar";
-import SimpleCarousel from "@/components/SimpleCarousel";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";

@@ -60,7 +60,7 @@ export function DeliveryInfo() {
                 </p>
                 <Link
                   className="btn btn-info btn-md rounded-full px-10 shadow-lg shadow-info/20"
-                  to="/app/login"
+                  to="/auth/login"
                 >
                   Login
                 </Link>
