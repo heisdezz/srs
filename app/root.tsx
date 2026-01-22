@@ -5,12 +5,17 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
+  type LoaderFunctionArgs,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 import { middleware } from "middleware/middleware";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CookieTs from "cookie-ts";
 
+import appCss from "./app.css?url";
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -22,11 +27,44 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
+  // {
+  //   rel: "stylesheet",
+  //   href: appCss,
+  // },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    // crossOrigin: true,
+  },
+  {
+    href: "https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Lobster+Two:wght@400;700&display=swap",
+    rel: "stylesheet",
+  },
 ];
+export const loader = async (props: LoaderFunctionArgs) => {
+  const cookie = props.request.headers.get("cookie");
+  const parsed = CookieTs.parse(cookie);
+  console.log(parsed);
+  return { theme: parsed["theme"] || "srs" };
+};
+const client = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error: any) => {
+        // PocketBase returns 404 when record not found
+        if (error?.status === 404) return false;
 
+        // Optional: stop after 2 retries
+        return failureCount < 2;
+      },
+    },
+  },
+});
 export function Layout({ children }: { children: React.ReactNode }) {
+  const props = useLoaderData<typeof loader>();
   return (
-    <html lang="en">
+    <html lang="en" data-theme={props.theme}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,7 +72,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <QueryClientProvider client={client}>{children}</QueryClientProvider>
+        {/*{children}*/}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -75,5 +114,4 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   );
 }
 
-
-export  const unstable_middleware = [middleware]
+export const unstable_middleware = [middleware];

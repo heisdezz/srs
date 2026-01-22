@@ -9,7 +9,9 @@ import { nextRoutes, appRouterStyle } from "rr-next-routes/react-router";
 
 const routes = nextRoutes({
   print: "info",
-  routeFileNames: ["page", "index", "route"],
+  routeFileNames: ["page", "index"],
+  layoutFileName: "route",
+  folderName: "routes",
 });
 
 export default routes satisfies RouteConfig;
