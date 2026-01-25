@@ -10,6 +10,17 @@
     <link rel="manifest" href="/manifest.json" />
     <title>SRU</title>
   </head>
+  <script>
+    (function () {
+      const theme = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("theme="))
+        ?.split("=")[1];
+      if (theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+      }
+    })();
+  </script>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.tsx"></script>
