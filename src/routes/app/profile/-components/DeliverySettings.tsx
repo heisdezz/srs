@@ -145,7 +145,7 @@ const DeliveryForm = ({
     return toast.error("Not Complete/Valid");
   };
 
-  const props = validate_addr(formValues as any);
+  const props = validate_addr(initial as any);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

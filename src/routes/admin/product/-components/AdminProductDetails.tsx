@@ -14,7 +14,6 @@ import SimpleSelect from "@/components/inputs/SimpleSelect";
 
 // Zod schema for validating the dynamic product options
 const optionValueSchema = z.object({
-  id: z.string(),
   label: z.string().min(1, "Label is required"),
   price: z.number().default(0),
 });
@@ -23,7 +22,15 @@ const optionSchema = z.object({
   key: z.string(),
   label: z.string().min(1, "Option name is required"),
   type: z.literal("select"),
-  values: z.array(optionValueSchema).min(1, "At least one value is required"),
+  values: z
+    .array(
+      z.object({
+        id: z.string(), // Internal ID for useFieldArray/React keys
+        label: z.string().min(1, "Label is required"),
+        price: z.number().default(0),
+      }),
+    )
+    .min(1, "At least one value is required"),
 });
 
 const productFormSchema = z.object({
@@ -37,7 +44,6 @@ const productFormSchema = z.object({
 });
 
 type ProductFormValues = z.infer<typeof productFormSchema>;
-type OptionWithKey = Option & { key: string };
 
 export default function AdminProductDetails({
   item,
@@ -49,12 +55,20 @@ export default function AdminProductDetails({
   addFn?: (data: Partial<ProductsRecord<OptionsConfig>>) => void;
 }) {
   const defaultOptions = (item.options || {}) as OptionsConfig;
-  const defaultOptionsArray: OptionWithKey[] = Object.entries(
-    defaultOptions,
-  ).map(([key, option]) => ({ ...option, key }));
+  const defaultOptionsArray = Object.entries(defaultOptions).map(
+    ([key, option]) => ({
+      key,
+      label: option.label,
+      type: option.type,
+      values: Object.entries(option.values).map(([vKey, vVal]) => ({
+        id: vKey,
+        label: vVal.label,
+        price: vVal.price,
+      })),
+    }),
+  );
 
   const methods = useForm<ProductFormValues>({
-    // @ts-ignore
     resolver: zodResolver(productFormSchema),
     defaultValues: {
       name: item.name || "",
@@ -63,18 +77,11 @@ export default function AdminProductDetails({
       discountPrice: item.discountPrice || 0,
       quantity: item.quantity || 0,
       description: item.description || "",
-      optionsDataArray: defaultOptionsArray,
+      optionsDataArray: defaultOptionsArray as any,
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    watch,
-    setValue,
-    formState: { errors },
-  } = methods;
+  const { register, handleSubmit, control, watch, setValue } = methods;
 
   const {
     fields: optionFields,
@@ -102,11 +109,18 @@ export default function AdminProductDetails({
   });
 
   const onSubmit = (data: ProductFormValues) => {
-    console.log("changes");
     const optionsConfigToSend: OptionsConfig = data.optionsDataArray.reduce(
       (acc, optionItem) => {
-        const { key, ...rest } = optionItem;
-        acc[key] = rest;
+        const valuesMap: { [key: string]: OptionValue } = {};
+        optionItem.values.forEach((v) => {
+          valuesMap[v.id] = { label: v.label, price: v.price };
+        });
+
+        acc[optionItem.key] = {
+          label: optionItem.label,
+          type: optionItem.type,
+          values: valuesMap,
+        };
         return acc;
       },
       {} as OptionsConfig,
@@ -272,7 +286,7 @@ export default function AdminProductDetails({
                 <button
                   type="button"
                   onClick={() => {
-                    const newOptionValue: OptionValue = {
+                    const newOptionValue = {
                       id: crypto.randomUUID(),
                       label: "",
                       price: 0,
@@ -295,10 +309,10 @@ export default function AdminProductDetails({
             <button
               type="button"
               onClick={() => {
-                const newOption: OptionWithKey = {
+                const newOption = {
                   key: `option_${crypto.randomUUID()}`,
                   label: "",
-                  type: "select",
+                  type: "select" as const,
                   values: [{ id: crypto.randomUUID(), label: "", price: 0 }],
                 };
                 appendOption(newOption);
