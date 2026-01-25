@@ -2,6 +2,7 @@ import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 
 const client = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,7 @@ export const Route = createRootRoute({
     <>
       <QueryClientProvider client={client}>
         {" "}
+        <Toaster richColors position="top-left" />
         <Outlet />
       </QueryClientProvider>
 
