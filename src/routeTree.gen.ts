@@ -13,7 +13,6 @@ import { Route as AuthRouteRouteImport } from './routes/auth/route'
 import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as TestIndexRouteImport } from './routes/test/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
@@ -22,6 +21,7 @@ import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthAdminRouteImport } from './routes/auth/admin'
 import { Route as AppProductsRouteRouteImport } from './routes/app/products/route'
 import { Route as AppOrdersRouteRouteImport } from './routes/app/orders/route'
+import { Route as TestCartIndexRouteImport } from './routes/test/cart/index'
 import { Route as AppProfileIndexRouteImport } from './routes/app/profile/index'
 import { Route as AppProductsIndexRouteImport } from './routes/app/products/index'
 import { Route as AppOrdersIndexRouteImport } from './routes/app/orders/index'
@@ -54,11 +54,6 @@ const AdminRouteRoute = AdminRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TestIndexRoute = TestIndexRouteImport.update({
-  id: '/test/',
-  path: '/test/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -100,6 +95,11 @@ const AppOrdersRouteRoute = AppOrdersRouteRouteImport.update({
   id: '/orders',
   path: '/orders',
   getParentRoute: () => AppRouteRoute,
+} as any)
+const TestCartIndexRoute = TestCartIndexRouteImport.update({
+  id: '/test/cart/',
+  path: '/test/cart/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppProfileIndexRoute = AppProfileIndexRouteImport.update({
   id: '/profile/',
@@ -180,7 +180,6 @@ export interface FileRoutesByFullPath {
   '/auth/signup': typeof AuthSignupRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
-  '/test/': typeof TestIndexRoute
   '/admin/order/$orderId': typeof AdminOrderOrderIdRoute
   '/admin/product/$id': typeof AdminProductIdRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
@@ -193,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/app/orders/': typeof AppOrdersIndexRoute
   '/app/products/': typeof AppProductsIndexRoute
   '/app/profile/': typeof AppProfileIndexRoute
+  '/test/cart/': typeof TestCartIndexRoute
   '/admin/product/new/': typeof AdminProductNewIndexRoute
 }
 export interface FileRoutesByTo {
@@ -204,7 +204,6 @@ export interface FileRoutesByTo {
   '/auth/signup': typeof AuthSignupRoute
   '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
-  '/test': typeof TestIndexRoute
   '/admin/order/$orderId': typeof AdminOrderOrderIdRoute
   '/admin/product/$id': typeof AdminProductIdRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
@@ -217,6 +216,7 @@ export interface FileRoutesByTo {
   '/app/orders': typeof AppOrdersIndexRoute
   '/app/products': typeof AppProductsIndexRoute
   '/app/profile': typeof AppProfileIndexRoute
+  '/test/cart': typeof TestCartIndexRoute
   '/admin/product/new': typeof AdminProductNewIndexRoute
 }
 export interface FileRoutesById {
@@ -233,7 +233,6 @@ export interface FileRoutesById {
   '/auth/signup': typeof AuthSignupRoute
   '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
-  '/test/': typeof TestIndexRoute
   '/admin/order/$orderId': typeof AdminOrderOrderIdRoute
   '/admin/product/$id': typeof AdminProductIdRoute
   '/app/order/$orderId': typeof AppOrderOrderIdRoute
@@ -246,6 +245,7 @@ export interface FileRoutesById {
   '/app/orders/': typeof AppOrdersIndexRoute
   '/app/products/': typeof AppProductsIndexRoute
   '/app/profile/': typeof AppProfileIndexRoute
+  '/test/cart/': typeof TestCartIndexRoute
   '/admin/product/new/': typeof AdminProductNewIndexRoute
 }
 export interface FileRouteTypes {
@@ -263,7 +263,6 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/admin/'
     | '/app/'
-    | '/test/'
     | '/admin/order/$orderId'
     | '/admin/product/$id'
     | '/app/order/$orderId'
@@ -276,6 +275,7 @@ export interface FileRouteTypes {
     | '/app/orders/'
     | '/app/products/'
     | '/app/profile/'
+    | '/test/cart/'
     | '/admin/product/new/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -287,7 +287,6 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/admin'
     | '/app'
-    | '/test'
     | '/admin/order/$orderId'
     | '/admin/product/$id'
     | '/app/order/$orderId'
@@ -300,6 +299,7 @@ export interface FileRouteTypes {
     | '/app/orders'
     | '/app/products'
     | '/app/profile'
+    | '/test/cart'
     | '/admin/product/new'
   id:
     | '__root__'
@@ -315,7 +315,6 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/admin/'
     | '/app/'
-    | '/test/'
     | '/admin/order/$orderId'
     | '/admin/product/$id'
     | '/app/order/$orderId'
@@ -328,6 +327,7 @@ export interface FileRouteTypes {
     | '/app/orders/'
     | '/app/products/'
     | '/app/profile/'
+    | '/test/cart/'
     | '/admin/product/new/'
   fileRoutesById: FileRoutesById
 }
@@ -336,7 +336,7 @@ export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  TestIndexRoute: typeof TestIndexRoute
+  TestCartIndexRoute: typeof TestCartIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -367,13 +367,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/test/': {
-      id: '/test/'
-      path: '/test'
-      fullPath: '/test/'
-      preLoaderRoute: typeof TestIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -431,6 +424,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/orders'
       preLoaderRoute: typeof AppOrdersRouteRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/test/cart/': {
+      id: '/test/cart/'
+      path: '/test/cart'
+      fullPath: '/test/cart/'
+      preLoaderRoute: typeof TestCartIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/app/profile/': {
       id: '/app/profile/'
@@ -622,7 +622,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRouteRoute: AdminRouteRouteWithChildren,
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
-  TestIndexRoute: TestIndexRoute,
+  TestCartIndexRoute: TestCartIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

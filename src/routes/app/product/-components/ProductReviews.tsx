@@ -103,7 +103,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
           {user && (
             <button
               onClick={() => modal.showModal()}
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary "
             >
               Write Review
             </button>

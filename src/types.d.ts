@@ -2,7 +2,6 @@ export type OptionValue = {
   label: string;
   price: number;
 };
-
 export type Option = {
   label: string;
   type: "select";
@@ -51,4 +50,35 @@ export type OrderType = {
 export interface CartRequestType {
   productId: string;
   options: CartItemOption;
+}
+
+export interface CheckoutLocation {
+  city: string;
+  collectionId: string;
+  collectionName: string;
+  country: string;
+  created: string;
+  id: string;
+  lat: number;
+  lng: number;
+  state: string;
+  street: string;
+  updated: string;
+  user_id: string;
+  zip: string;
+}
+
+export interface CheckoutFees {
+  deliveryFee: number;
+  totalFees: number;
+}
+
+export interface CheckoutType {
+  delivery_fee: number;
+  fees: CheckoutFees;
+  location: CheckoutLocation;
+  message: string;
+  opt: any[];
+  sub_total_fees: number;
+  total_fees: number;
 }

@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { usePaystackPayment } from "react-paystack";
 import { extract_message } from "@/helpers/api";
 import { useQuery } from "@tanstack/react-query";
+import type { CartResponse } from "..";
 
 const defaultDeliverySettings = {
   street: "",
@@ -22,7 +23,11 @@ const defaultDeliverySettings = {
   zip: "",
 };
 
-export default function Checkout() {
+export default function Checkout({
+  cartResponse,
+}: {
+  cartResponse: CartResponse;
+}) {
   const { user } = useUser();
   const query = useQuery({
     queryKey: ["delvierySettings"],
@@ -59,9 +64,9 @@ export default function Checkout() {
   });
   const initialize = usePaystackPayment(null);
   const props = useCartStore();
-  const deliveryFee = 3374;
-  const total = calculate_cart_total(props.cart) + deliveryFee;
-  const config = create_config(total, "desto4q@gmail.com");
+  const deliveryFee = cartResponse?.delivery_fee;
+  const total = cartResponse.total_fees;
+  const config = create_config(total, user?.email || "desto4q@gmail.com");
 
   const create_orders = async () => {
     if (query.isError) {
@@ -84,15 +89,22 @@ export default function Checkout() {
     if (!user) {
       return toast.error("Please login to continue");
     }
-    const orders = props.cart_array.map((item) => {
+
+    const items_to_order = props.cart_array.filter(
+      (item) => !cartResponse.out_of_stock[item.id],
+    );
+
+    if (items_to_order.length === 0) {
+      return toast.error("No items available to order.");
+    }
+
+    const orders = items_to_order.map((item) => {
       const order = {
         productId: item.id,
         productOptions: item.options,
         userId: user.id as string,
         refId: config.reference,
-        price:
-          compute_total_price(item.price, item.options, item.quantity) +
-          deliveryFee,
+        price: compute_total_price(item.price, item.options, item.quantity),
         quantity: item.quantity,
         deliveryFee: deliveryFee,
       } satisfies OrderType;
@@ -138,7 +150,7 @@ export default function Checkout() {
             <div className="flex items-center justify-between text-base-content/70">
               <span className="text-sm font-medium">Subtotal</span>
               <span className="font-mono">
-                NGN {calculate_cart_total(props.cart).toLocaleString()}
+                NGN {cartResponse.sub_total_fees.toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between text-base-content/70">

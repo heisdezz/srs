@@ -189,7 +189,7 @@ export default function ProductDetails({
             </div>
           </div>
           <div className="">
-            <button type="submit" className="btn btn-primary btn-block">
+            <button type="submit" className="btn btn-primary btn-xl btn-block">
               Add To Cart
             </button>
           </div>

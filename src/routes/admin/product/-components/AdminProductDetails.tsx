@@ -113,10 +113,10 @@ export default function AdminProductDetails({
       (acc, optionItem) => {
         const valuesMap: { [key: string]: OptionValue } = {};
         optionItem.values.forEach((v) => {
-          valuesMap[v.id] = { label: v.label, price: v.price };
+          valuesMap[v.label] = { label: v.label, price: v.price };
         });
 
-        acc[optionItem.key] = {
+        acc[optionItem.label] = {
           label: optionItem.label,
           type: optionItem.type,
           values: valuesMap,
@@ -287,7 +287,7 @@ export default function AdminProductDetails({
                   type="button"
                   onClick={() => {
                     const newOptionValue = {
-                      id: crypto.randomUUID(),
+                      id: crypto.randomUUID(), // Ensure unique ID for new values
                       label: "",
                       price: 0,
                     };
@@ -310,7 +310,7 @@ export default function AdminProductDetails({
               type="button"
               onClick={() => {
                 const newOption = {
-                  key: `option_${crypto.randomUUID()}`,
+                  key: "", // Key will be set to label in onSubmit
                   label: "",
                   type: "select" as const,
                   values: [{ id: crypto.randomUUID(), label: "", price: 0 }],

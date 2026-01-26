@@ -75,7 +75,7 @@ function RouteComponent() {
     deletedImages.forEach((path: string) => {
       formData.append("images-", path);
     });
-
+    console.log(formData);
     toast.promise(mutateAsync(formData), {
       loading: "Updating product...",
       success: "Product updated successfully!",
@@ -120,7 +120,7 @@ function RouteComponent() {
                 {/*<AdminProductInfo item={data} />*/}
               </div>
               <div className="flex-1">
-                <AdminProductDetails item={data} addFn={submit as any} />
+                <AdminProductDetails item={data} addFn={submit as any} add />
               </div>
             </div>
           );

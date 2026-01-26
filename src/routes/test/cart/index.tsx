@@ -4,7 +4,7 @@ import type { CartRequestType, UserCart } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/test/")({
+export const Route = createFileRoute("/test/cart/")({
   component: RouteComponent,
 });
 
