@@ -32,7 +32,7 @@ function RouteComponent() {
   });
 
   return (
-    <div className="mx-auto container max-w-3xl px-4 min-h-screen py-8 md:py-12">
+    <div className="mx-auto container max-w-5xl px-4 min-h-screen py-8 md:py-12">
       <header className="flex flex-col mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Order Details</h1>
         <div className="badge badge-ghost badge-md mt-2 font-mono opacity-70">

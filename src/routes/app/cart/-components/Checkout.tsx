@@ -14,6 +14,7 @@ import { usePaystackPayment } from "react-paystack";
 import { extract_message } from "@/helpers/api";
 import { useQuery } from "@tanstack/react-query";
 import type { CartResponse } from "..";
+import { useNavigate } from "@tanstack/react-router";
 
 const defaultDeliverySettings = {
   street: "",
@@ -54,6 +55,7 @@ export default function Checkout({
     placeholderData: defaultDeliverySettings,
     initialData: defaultDeliverySettings,
   });
+  const nav = useNavigate();
   const data = query.data;
   const { isValid } = validate_addr({
     state: data.state,
@@ -125,6 +127,9 @@ export default function Checkout({
           loading: "Sending orders...",
           success: () => {
             props.clear_cart();
+            nav({
+              to: "/app/orders",
+            });
             return "Orders sent successfully";
           },
           error: extract_message,

@@ -90,15 +90,24 @@ export default function ProductDetails({
     <div className="space-y-4 getValues">
       <h2 className="text-3xl font-bold">{item.name}</h2>
       <p>{item.description}</p>
-      <div className="">
-        {item.discountPrice && (
-          <p className="text-lg line-through text-error">
-            NGN {((item.price || 0) * quantity).toLocaleString()}
+      <div className="flex justify-between items-end">
+        <div className="">
+          {item.discountPrice && (
+            <p className="text-lg line-through text-error">
+              NGN {((item.price || 0) * quantity).toLocaleString()}
+            </p>
+          )}
+          <p className="stat-value">
+            NGN {(computed_price * quantity).toLocaleString()}
           </p>
+        </div>
+        {item.quantity !== undefined && (
+          <div className="text-right">
+            <span className="badge badge-ghost">
+              {item.quantity} units in stock
+            </span>
+          </div>
         )}
-        <p className="stat-value">
-          NGN {(computed_price * quantity).toLocaleString()}
-        </p>
       </div>
       <div className=" bg-base-100 ring fade rounded-sleek shadow">
         <h2 className="p-4 border-b font-bold text-current/80 fade">Options</h2>

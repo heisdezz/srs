@@ -1,14 +1,17 @@
 import type { ClientResponseError } from "pocketbase";
 
 export const extract_message = (data: ClientResponseError) => {
+  if (data.message) {
+    return data.message;
+  }
   const data_keys = Object.keys(data.data);
   console.log({ ...data }, "data");
 
   if (data_keys.length < 1) {
     return data.cause["message"];
   }
-  const error_object = data.data.data;
-  if (!data.data) {
+  const error_object = data?.data?.data;
+  if (!data?.data) {
     return data.message;
   }
   const keys = Object.keys(error_object);

@@ -39,13 +39,16 @@ export default function PageLoader<TData>(props: PageLoader<TData>) {
     );
   }
   if (query.isError) {
-    const error = extract_message(query.error as any);
+    const error = extract_message(query?.error as any);
+    // const error = "error occured";
+    // const error_message = JSON.stringify(query?.error);
     return (
       <>
         <div className="p-4 min-h-screen grid place-items-center bg-base-300 rounded-md">
           <div className="p-4 space-y-4">
             <div className="text-lg text-center fieldset-label font-bold wrap-anywhere">
               {error}
+              {/*{error_message}*/}
             </div>
             <button
               className="btn btn-error btn-block"

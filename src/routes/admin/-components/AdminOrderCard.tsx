@@ -72,7 +72,7 @@ export default function AdminOrderCard({
         </div>
 
         {/* Chips for Options */}
-        <div className="h-12 overflow-hidden mb-4">
+        {/*<div className="h-12 overflow-hidden mb-4">
           {keys.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {keys.map((item) => (
@@ -88,7 +88,7 @@ export default function AdminOrderCard({
               ))}
             </div>
           )}
-        </div>
+        </div>*/}
 
         {/* Pricing Section - Material Surface */}
         <div className="bg-base-200/40 rounded-2xl p-4 mb-6">

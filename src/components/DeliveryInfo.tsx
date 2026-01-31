@@ -16,6 +16,7 @@ export function DeliveryInfo() {
     country: "",
     zip: "",
   };
+  const isAdmin = user?.collectionName == "admins";
   const query = useQuery({
     queryKey: ["delvierySettings"],
     queryFn: () =>
@@ -37,7 +38,7 @@ export function DeliveryInfo() {
           }
           throw stat;
         }),
-    enabled: !!user,
+    enabled: !!user || isAdmin,
     placeholderData: defaultDeliverySettings,
     initialData: defaultDeliverySettings,
   });

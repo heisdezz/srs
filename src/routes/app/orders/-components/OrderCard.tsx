@@ -19,7 +19,8 @@ export default function OrderCard({
   const options = arr.map((opt) => {
     return {
       name: opt["label"],
-      value: opt["values"][0]["label"],
+      //@ts-ignore
+      value: opt?.values?.[0]?.label ?? "",
     };
   });
   const product_info = item["expand"].productId as ProductsResponse;
