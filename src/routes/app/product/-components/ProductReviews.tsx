@@ -48,6 +48,9 @@ export default function ProductReviews({ productId }: { productId: string }) {
     onSuccess: () => {
       reviews.refetch();
       queryClient.invalidateQueries({ queryKey: ["reviews_count", productId] });
+      queryClient.invalidateQueries({
+        queryKey: ["review-allowed", productId, user.id],
+      });
       modal.closeModal();
       form.reset();
     },
@@ -249,15 +252,22 @@ const ReviewAllowed = ({
 }: {
   modal: any;
   userId: string;
-  productId;
+  productId: string;
 }) => {
   const id = productId;
   const query = useQuery({
-    queryKey: ["review-allowed"],
-    queryFn: () =>
-      pb
-        .collection("reviews")
-        .getFirstListItem(`product_id = "${id}" && user_id = "${userId}"`),
+    queryKey: ["review-allowed", id, userId],
+    queryFn: async () => {
+      try {
+        const res = await pb
+          .collection("reviews")
+          .getFirstListItem(`product_id = "${id}" && user_id = "${userId}"`);
+        return res;
+      } catch (e) {
+        return null;
+      }
+    },
+    enabled: !!id && !!userId,
   });
   const isAllowed = !!query.data;
   return (

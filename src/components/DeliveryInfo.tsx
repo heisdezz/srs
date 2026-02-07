@@ -95,7 +95,6 @@ export function DeliveryInfo() {
           </div>
         )}
       </div>
-      );
     </div>
   );
 }

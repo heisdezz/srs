@@ -24,7 +24,7 @@ export default function Trending() {
           <>
             <Link
               to="/app/products"
-              className="btn btn-primary btn-soft ring btn-sm fade"
+              className="btn btn-accent btn-soft ring btn-sm "
             >
               See All
             </Link>
