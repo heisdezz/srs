@@ -1,7 +1,7 @@
 import { pb } from "@/api/apiClient";
 import CompLoader from "@/components/layouts/ComponentLoader";
 import { useUser, validateItems } from "@/helpers/client";
-import { validate_addr } from "@/store/client";
+import { useDeliverySettings, validate_addr } from "@/store/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { DeliverySettingsResponse } from "pocketbase-types";
 import { toast } from "sonner";
@@ -70,7 +70,7 @@ const DeliveryForm = ({
 }) => {
   const { user } = useUser();
   const queryClient = useQueryClient();
-
+  const deliveryProps = useDeliverySettings();
   const {
     register,
     handleSubmit,
@@ -117,14 +117,16 @@ const DeliveryForm = ({
     },
     onSuccess: (newData) => {
       queryClient.invalidateQueries({ queryKey: ["delvierySettings"] });
-      reset({
+      const updated = {
         street: newData.street || "",
         city: newData.city || "",
         state: newData.state || "",
         country: newData.country || "",
         lat: newData.lat ?? null,
         lng: newData.lng ?? null,
-      });
+      };
+      reset(updated);
+      deliveryProps.updateDeliverySettings(updated as any);
     },
   });
 

@@ -1,7 +1,7 @@
 import { pb } from "@/api/apiClient";
 import { DeliveryInfo } from "@/components/DeliveryInfo";
 import { get_image, validateItems } from "@/helpers/client";
-import { useCartStore } from "@/store/client";
+import { useCartStore, useDeliverySettings } from "@/store/client";
 import type {
   CartItem,
   CartItemOption,
@@ -35,6 +35,7 @@ export default function ProductDetails({
   const option_keys = Object.keys(options) as (keyof typeof options)[];
   const { handleSubmit, watch, control } = useForm<FormData>();
 
+  const { isValid, full_address } = useDeliverySettings();
   const onSubmit: SubmitHandler<FormData> = (data) => {
     if (!pb?.authStore?.isValid)
       return toast.error("Please Login to Add to Cart");
@@ -198,7 +199,12 @@ export default function ProductDetails({
             </div>
           </div>
           <div className="">
-            <button type="submit" className="btn btn-primary btn-xl btn-block">
+            {/*{JSON.stringify(full_address)}*/}
+            <button
+              disabled={!isValid}
+              type="submit"
+              className="btn btn-primary btn-xl btn-block"
+            >
               Add To Cart
             </button>
           </div>
