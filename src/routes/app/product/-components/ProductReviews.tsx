@@ -101,12 +101,11 @@ export default function ProductReviews({ productId }: { productId: string }) {
             <p className="text-sm opacity-60">Real feedback from customers</p>
           </div>
           {user && (
-            <button
-              onClick={() => modal.showModal()}
-              className="btn btn-primary "
-            >
-              Write Review
-            </button>
+            <ReviewAllowed
+              modal={modal}
+              userId={user.id}
+              productId={productId}
+            />
           )}
         </div>
 
@@ -119,7 +118,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
                 className="p-5 rounded-2xl bg-base-100 border border-base-200 shadow-sm flex gap-4 transition-all hover:border-primary/30 ring fade"
               >
                 <div className="avatar placeholder h-fit">
-                  <div className="bg-neutral text-neutral-content rounded-full w-10 h-10 ring-1 ring-base-300">
+                  <div className="bg-neutral text-neutral-content grid place-items-center rounded-full w-10 h-10 ring-1 ring-base-300">
                     <span className="text-sm uppercase font-bold">
                       {review.expand?.user_id?.fullName?.charAt(0) || "U"}
                     </span>
@@ -240,5 +239,36 @@ const RatingDistribution = ({ id }: { id: string }) => {
         );
       }}
     </CompLoader>
+  );
+};
+
+const ReviewAllowed = ({
+  modal,
+  userId,
+  productId,
+}: {
+  modal: any;
+  userId: string;
+  productId;
+}) => {
+  const id = productId;
+  const query = useQuery({
+    queryKey: ["review-allowed"],
+    queryFn: () =>
+      pb
+        .collection("reviews")
+        .getFirstListItem(`product_id = "${id}" && user_id = "${userId}"`),
+  });
+  const isAllowed = !!query.data;
+  return (
+    <>
+      <button
+        disabled={!userId || query.isLoading || isAllowed}
+        onClick={() => modal.showModal()}
+        className="btn btn-primary "
+      >
+        Write Review
+      </button>
+    </>
   );
 };
