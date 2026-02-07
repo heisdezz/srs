@@ -25,7 +25,18 @@ function RouteComponent() {
                   .authWithPassword(data.email, data.password),
                 {
                   loading: "Logging in...",
-                  success: (data) => {
+                  success: async (data) => {
+                    const settings = await pb
+                      .collection("deliverySettings")
+                      .getOne(data.record.id)
+                      .catch((err) => {})
+                      .then((data) => {
+                        localStorage.setItem(
+                          "delivery_settings",
+                          JSON.stringify(data),
+                        );
+                      });
+
                     nav({
                       to: "/app",
                     });
