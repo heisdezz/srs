@@ -8,6 +8,8 @@ export const Route = createFileRoute("/auth/logout")({
     return redirect({ to: "/app" });
   },
   beforeLoad: () => {
+    localStorage.removeItem("delivery_settings");
+    localStorage.removeItem("cart");
     return pb.authStore.clear();
   },
 });
