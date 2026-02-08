@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { pb } from "@/api/apiClient";
 import PageLoader from "@/components/layouts/PageLoader";
 import type { CartRequestType, UserCart } from "@/types";
+import { Section } from "lucide-react";
 
 export const Route = createFileRoute("/app/cart/")({
   component: RouteComponent,
@@ -74,6 +75,52 @@ function RouteComponent() {
     enabled: keys.length > 0,
   });
   const dummy_arr = [1, 2, 3];
+
+  if (keys.length < 1) {
+    return (
+      <>
+        <section className="container flex-col flex min-h-180 mx-auto px-4 py-12 space-y-4">
+          <h2 className="text-3xl font-bold">Cart Items ({cart_length})</h2>
+          <div className="flex flex-col lg:flex-row flex-1 gap-4 ">
+            <div className="flex-1  ">
+              <EmptyList list={[]} />
+            </div>
+            <div className="flex-1 lg:max-w-xs">
+              <div className="flex-1  rounded-sleek ring fade shadow-xl">
+                <section className="p-6 font-bold border-b text-xl fade">
+                  <header>
+                    <h2 className="text-2xl font-medium tracking-tight text-base-content">
+                      Order Summary
+                    </h2>
+                    <p className="text-sm text-base-content/60 mt-1">
+                      Review your total and delivery details
+                    </p>
+                  </header>
+                </section>
+
+                <div className="p-6 flex flex-col flex-1 space-y-4">
+                  <div className="p-4  ring rounded-sleek fade">
+                    <div>
+                      <h2 className="py-2 border-b fade">SubTotal: 0</h2>
+                      <div className="card bg-info/10 ring  ring-info/40 my-2">
+                        <div className="card-body">Cart is Empty</div>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    disabled
+                    className="p-6 btn-xl mt-auto btn-block btn btn-primary"
+                  >
+                    Checkout
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
