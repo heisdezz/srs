@@ -32,7 +32,7 @@ export default function NewIn() {
           </>
         }
       >
-        <CompLoader query={query} minHeight={520}>
+        <CompLoader query={query}>
           {(data) => {
             return (
               <>

@@ -1,5 +1,6 @@
 import { pb } from "@/api/apiClient";
 import { useUser } from "@/helpers/client";
+import { useCartStore } from "@/store/client";
 import { Link } from "@tanstack/react-router";
 import {
   ShoppingCart,
@@ -16,9 +17,7 @@ export default function AuthButtonHeader() {
   if (user) {
     return (
       <div className="space-x-1">
-        <Link to="/app/cart" className="btn btn-ghost btn-circle ">
-          <ShoppingCart className="size-5" />
-        </Link>
+        <CartButton />
         <div className="dropdown dropdown-end">
           <button className="btn btn-circle  btn-ghost">
             <User />
@@ -60,3 +59,20 @@ export default function AuthButtonHeader() {
     </div>
   );
 }
+
+const CartButton = () => {
+  const cartProps = useCartStore();
+  const cartCount = cartProps.cart_array.length;
+  return (
+    <Link to="/app/cart" className="btn btn-ghost btn-circle relative ">
+      {cartCount > 0 ? (
+        <span className="bg-accent aspect-square size-5 text-sm absolute right-0 top-0 mb-1  text-primary-content grid place-items-center rounded-full">
+          {cartCount}
+        </span>
+      ) : (
+        <></>
+      )}
+      <ShoppingCart className="size-5" />
+    </Link>
+  );
+};
