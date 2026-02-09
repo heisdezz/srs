@@ -102,7 +102,7 @@ function RouteComponent() {
                   <div className="p-4  ring rounded-sleek fade">
                     <div>
                       <h2 className="py-2 border-b fade">SubTotal: 0</h2>
-                      <div className="card bg-info/10 ring  ring-info/40 my-2">
+                      <div className="card bg-info/10 ring  ring-info/40  my-2">
                         <div className="card-body">Cart is Empty</div>
                       </div>
                     </div>

@@ -6,7 +6,11 @@ import {
   compute_total_price,
   useUser,
 } from "@/helpers/client";
-import { useCartStore, validate_addr } from "@/store/client";
+import {
+  useCartStore,
+  useDeliverySettings,
+  validate_addr,
+} from "@/store/client";
 import type { OrderType } from "@/types";
 import { toast } from "sonner";
 
@@ -30,51 +34,26 @@ export default function Checkout({
   cartResponse: CartResponse;
 }) {
   const { user } = useUser();
-  const query = useQuery({
-    queryKey: ["delvierySettings"],
-    queryFn: () =>
-      pb
-        .collection("deliverySettings")
-        .getOne(user.id)
-        .catch((stat) => {
-          if (stat.status === 404) {
-            pb.collection("deliverySettings").create({
-              id: user.id,
-              user_id: user.id,
-              street: "",
-              city: "",
-              state: "",
-              country: "",
-              zip: "",
-            });
-            return defaultDeliverySettings;
-          }
-          throw stat;
-        }),
-    enabled: !!user,
-    placeholderData: defaultDeliverySettings,
-    initialData: defaultDeliverySettings,
-  });
+
   const nav = useNavigate();
-  const data = query.data;
-  const { isValid } = validate_addr({
-    state: data.state,
-    street: data.street,
-    city: data.city,
-    country: data.country,
-    zip: data.zip,
-  });
+  const { isValid } = useDeliverySettings();
   const initialize = usePaystackPayment(null);
   const props = useCartStore();
   const deliveryFee = cartResponse?.delivery_fee;
   const total = cartResponse.total_fees;
-  const config = create_config(total, user?.email || "desto4q@gmail.com");
+  const meta = {
+    custom_fields: [
+      {
+        display_name: "Cart",
+        variable_name: "cart",
+        value: props.cart,
+      },
+    ],
+  };
+
+  const config = create_config(total, user?.email || "desto4q@gmail.com", meta);
 
   const create_orders = async () => {
-    if (query.isError) {
-      query.refetch();
-      return toast.error("Failed to fetch delivery details");
-    }
     if (!isValid) return toast.error("Please fill in your delivery details");
     await pb
       .collection("users")
@@ -178,18 +157,11 @@ export default function Checkout({
 
         <div className="space-y-3">
           <button
-            disabled={query.isLoading || query.isError}
+            disabled={!isValid}
             onClick={() => create_orders()}
             className="btn btn-primary btn-block h-14 rounded-xl shadow-md hover:shadow-lg transition-all normal-case text-lg font-semibold"
           >
-            {query.isLoading ? (
-              <div className="flex items-center gap-3">
-                <span className="loading loading-spinner loading-sm"></span>
-                <span>Processing...</span>
-              </div>
-            ) : (
-              "Complete Purchase"
-            )}
+            Complete Purchase
           </button>
 
           <div className="flex items-center justify-center gap-2 text-xs text-base-content/40 uppercase tracking-widest font-bold">
